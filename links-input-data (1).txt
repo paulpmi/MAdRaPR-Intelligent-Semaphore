@@ -1,0 +1,13 @@
+http://geoffboeing.com/2016/11/osmnx-python-street-networks/
+
+https://github.com/gboeing/osmnx/blob/master/README.md
+
+http://aip.scitation.org/doi/pdf/10.1063/1.4994457
+
+http://www.fpz.unizg.hr/traffic/index.php/PROMTT/article/viewFile/738/591
+
+http://web-ng.info.uvt.ro/~dzaharie/ma2016/projects/applications/TrafficLightsOptimization
+
+http://www.cs.kent.edu/~dragan/ST-Spring2016/Traffic%20Flow%20Control.pdf
+
+http://www.sumo.dlr.de/userdoc/Downloads.html#SUMO_-_Latest_Development_Version

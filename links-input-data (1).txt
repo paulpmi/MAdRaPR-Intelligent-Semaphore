@@ -10,4 +10,8 @@ http://web-ng.info.uvt.ro/~dzaharie/ma2016/projects/applications/TrafficLightsOp
 
 http://www.cs.kent.edu/~dragan/ST-Spring2016/Traffic%20Flow%20Control.pdf
 
+DATA:
+
 http://www.sumo.dlr.de/userdoc/Downloads.html#SUMO_-_Latest_Development_Version
+
+http://web-ng.info.uvt.ro/~dzaharie/ma2016/projects/applications/TrafficLightsOptimization/traffic_lights%2bgraphs.pdf

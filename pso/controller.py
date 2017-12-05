@@ -18,7 +18,7 @@ class Controller:
         self.c1 = 1
         self.c2 = 2
         self.population_size = 10
-        self.max_iterations = 5
+        self.max_iterations = 10
         self.population = Swarm(self.population_size, intersection)
 
     def iteration(self):
@@ -29,6 +29,9 @@ class Controller:
     def run_alg(self):
         for i in range(0, self.max_iterations):
             self.iteration()
+        pBest = self.population.particles[0]
         for p in self.population.particles:
+            if p.fitness > pBest.fitness:
+                pBest = p
             print p.fitness
-        return self.intersection.id, self.population.get_best_particle(),
+        return self.intersection.id, pBest,

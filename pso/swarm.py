@@ -14,8 +14,11 @@ class Swarm:
     #    return Particle()
 
     def get_best_particle(self):
-        sorted(self.particles, key=lambda particle: particle.fitness, reverse=False)
-        return self.particles[0]
+        pBest = self.particles[0]
+        for p in self.particles:
+            if p.fitness > pBest.fitness:
+                pBest = p
+        return pBest
 
     def update_best(self):
         for particle in self.particles:

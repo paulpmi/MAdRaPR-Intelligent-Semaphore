@@ -14,7 +14,7 @@ class Swarm:
         for par in self.particles:
             par.evaluate(self.get_best_particle())
 
-            
+
     # def get_best_neighbour(self, particle):
     #   # for now: the range of particles that differ only with a maximum of 3-5 seconds for each state
     #    return Particle()
@@ -28,7 +28,6 @@ class Swarm:
             # see if it is ok to use != operator on referenced types
             if particle != self.best:
                 if particle.fitness > self.best.fitness:
-                    self.best = particle
                     for p in self.particles:
                         p.bestPosition = self.best.bestPosition
                         p.BestFitness = self.best.BestFitness

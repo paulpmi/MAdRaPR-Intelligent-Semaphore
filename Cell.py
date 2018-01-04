@@ -27,13 +27,14 @@ class LightPopulation:
         self.previousPop = self.pop
 
     def changeValues(self):
-        i = 0
-        if self.pop[i] > self.pop[i+1]:
-                self.pop[i] = random.randint(0, self.pop[i + 1])
-        elif self.pop[i] < self.pop[i+1]:
-            self.pop[i] = random.randint(15, 31)
-        else:
-            self.pop[i] = random.randint(5, 31)
+
+        for i in range(1, len(self.pop) - 1):
+            if self.pop[i] > self.pop[i+1] and self.pop[i]:
+                    self.pop[i] = random.randint(0, self.pop[i + 1])
+            elif self.pop[i] < self.pop[i+1]:
+                self.pop[i] = random.randint(15, 31)
+            else:
+                self.pop[i] = random.randint(5, 31)
 
 
 class TimePopulation:
@@ -41,52 +42,79 @@ class TimePopulation:
         self.pop = [random.randint(5, 31) for _ in range(nr)]
         self.oldpop = deepcopy(self.pop)
 
-    def changeValues(self):
-        for i in range(1, len(self.pop)-1):
-            if self.pop[i] > self.oldpop[i-1] and self.pop[i] > self.oldpop[i+1]:
-                #self.pop[i] = random.randint(self.pop[i-1], self.pop[i])
-                self.pop[i] = random.randint(5, 15)
-            elif self.pop[i] < self.oldpop[i-1] and self.pop[i] < self.oldpop[i+1]:
-                #self.pop[i] = random.randint(self.pop[i], self.pop[i+1])
-                self.pop[i] = random.randint(15, 31)
+    def changeValues(self, arrived= 0, laneNr= 0):
+
+        #for i in range(1, len(self.pop) - 1):
+
+        if arrived != 0:
+            print("THROWS ERROR " + str(arrived))
+            if arrived > self.pop[laneNr]:
+                self.pop[laneNr] = arrived + 10
+            elif arrived >= self.pop[laneNr] - 10:
+                self.pop[laneNr] += self.pop[laneNr] + 5
+            elif arrived < self.pop[laneNr]:
+                self.pop[laneNr] = arrived + 5
             else:
-                if self.pop[i-1] > self.pop[i+1]:
-                    self.pop[i-1], self.pop[i + 1] = self.pop[i+1], self.pop[i-1]
-                #self.pop[i] = random.randint(self.pop[i-1], self.pop[i+1])
-                self.pop[i] = random.randint(5, 31)
-        i = 0
-        if self.pop[i] > self.pop[i+1]:
-            self.pop[i] = random.randint(5, 15)
-        elif self.pop[i] < self.pop[i+1]:
-            self.pop[i] = random.randint(15, 31)
-        else:
-            self.pop[i] = random.randint(5, 31)
-        i = -1
-        if self.pop[i] > self.pop[i-1]:
-            self.pop[i] = random.randint(5, 15)
-        elif self.pop[i] < self.pop[i-1]:
-            self.pop[i] = random.randint(15, 31)
-        else:
-            self.pop[i] = random.randint(5, 31)
+                print("ELSE: " + str(arrived) + " " + str(laneNr))
+
+            print("LOG OUTPUT: " + str(self.pop[laneNr]))
+
+            for i in range(1, len(self.pop)-1):
+                if self.pop[i] > self.oldpop[i-1] and self.pop[i] > self.oldpop[i+1]:
+                    #self.pop[i] = random.randint(self.pop[i-1], self.pop[i])
+                    self.pop[i] = random.randint(2, 10)
+                elif self.pop[i] < self.oldpop[i-1] and self.pop[i] < self.oldpop[i+1]:
+                    #self.pop[i] = random.randint(self.pop[i], self.pop[i+1])
+                    self.pop[i] = random.randint(10, 15)
+                else:
+                    if self.pop[i-1] > self.pop[i+1]:
+                        self.pop[i-1], self.pop[i + 1] = self.pop[i+1], self.pop[i-1]
+                    #self.pop[i] = random.randint(self.pop[i-1], self.pop[i+1])
+                    self.pop[i] = random.randint(2, 15)
+            i = 0
+            if self.pop[i] > self.pop[i+1]:
+                self.pop[i] = random.randint(2, 10)
+            elif self.pop[i] < self.pop[i+1]:
+                self.pop[i] = random.randint(10, 15)
+            else:
+                self.pop[i] = random.randint(2, 15)
+            i = -1
+            if self.pop[i] > self.pop[i-1]:
+                self.pop[i] = random.randint(2, 10)
+            elif self.pop[i] < self.pop[i-1]:
+                self.pop[i] = random.randint(10, 15)
+            else:
+                self.pop[i] = random.randint(2, 15)
+            self.oldpop = self.pop
+
 
     def modify_xml(self):
         et = xml.etree.ElementTree.parse("D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml")
         root = et.getroot()
+
         for child in root.getchildren():
             tl_id = child.get('id')
             k = 0
-            xmldoc.getElementsByTagName('phase')
-            for s in itemlist:
-                print(s.attributes['duration'].value)
+
+            xmldoc1 = minidom.parse("D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml")
+
+            print("LOG POPULATION")
+            print(self.pop)
+
+            for s in xmldoc1.getElementsByTagName('phase'):
+                #print("LOG ATTRIBUTE: " + s.attributes['duration'].value)
                 s.attributes['duration'].value = str(self.pop[k])
-                k +=1
+
+                k += 1
+            xmldoc1.writexml(open('D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml', 'w'))
             """
             if tl_id == 0:
                 for phase in child.getchildren():
                     phase.set('duration', str(self.pop[k]))
                     k += 1
             """
-        et.write("D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml")
+        #et = ET.ElementTree(itemlist)
+        #et.write("D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml")
 
     def interations(self, nrIter):
         for i in range(nrIter):
@@ -113,13 +141,21 @@ class Simulation:
         traci.start(sumo_cmd)
         step = 0
         arrived = 0
+        oldArrived = 0
         deaparted = 0
+        laneNr = 0
+        tpArrived = 0
         tp = TimePopulation(len(itemlist))
-        while step < 1000:
+        while step < 2000:
             traci.simulationStep()
             step += 1
-            tp.changeValues()
-            tp.modify_xml()
+            if arrived != 0:
+                if laneNr >= len(itemlist):
+                    laneNr = 0
+                tp.changeValues(tpArrived, laneNr)
+                tp.modify_xml()
+                laneNr += 1
+                tpArrived = traci.simulation.getArrivedNumber()
             arrived += traci.simulation.getArrivedNumber()
             deaparted += traci.simulation.getDepartedNumber()
         traci.close()
@@ -131,12 +167,11 @@ class Simulation:
         arrived = 0
         deaparted = 0
         tp = TimePopulation(len(itemlist))
-        while step < 1000:
+        while step < 2000:
             traci.simulationStep()
             step += 1
             tp.changeValues()
             tp.modify_xml()
-
             #time.sleep(0.5)
             arrived += traci.simulation.getArrivedNumber()
             deaparted += traci.simulation.getDepartedNumber()
@@ -152,4 +187,4 @@ deaparted = 0
 print("Algorithm Started: ")
 
 s = Simulation()
-s.run_simulation()
+s.run_gui()

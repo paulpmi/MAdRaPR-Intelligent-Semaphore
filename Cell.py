@@ -7,13 +7,14 @@ import os
 import time
 import sys
 from copy import deepcopy
-xmldoc = minidom.parse('rilsa1.net.xml')
+xmldoc = minidom.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml", )
 itemlist = xmldoc.getElementsByTagName('phase')
 #print(len(itemlist))
 #print(itemlist[0].attributes['duration'].value)
 #for s in itemlist:
 #    print(s.attributes['duration'].value)
 
+print("ITEMLIST: " + str(len(itemlist)))
 
 class Cell:
     def __init__(self):
@@ -24,6 +25,9 @@ class LightPopulation:
     def __init__(self, nr):
         self.map = {0 : 'r', 1 : 'R', 2: 'y', 3: 'g', 4: 'G'}
         self.pop = [random.randint(0, 5) for _ in range(nr)]
+        self.state = []
+        for i in itemlist['state']:
+            self.state.append(i)
         self.previousPop = self.pop
 
     def changeValues(self):
@@ -40,6 +44,10 @@ class LightPopulation:
 class TimePopulation:
     def __init__(self, nr):
         self.pop = [random.randint(5, 31) for _ in range(nr)]
+        self.state = []
+        for i in itemlist:
+            print(str(i))
+            self.state.append(i.attributes['state'].value)
         self.oldpop = deepcopy(self.pop)
 
     def changeValues(self, arrived= 0, laneNr= 0):
@@ -48,71 +56,88 @@ class TimePopulation:
 
         if arrived != 0:
             print("THROWS ERROR " + str(arrived))
-            if arrived > self.pop[laneNr]:
-                self.pop[laneNr] = arrived + 10
-            elif arrived >= self.pop[laneNr] - 10:
-                self.pop[laneNr] += self.pop[laneNr] + 5
-            elif arrived < self.pop[laneNr]:
-                self.pop[laneNr] = arrived + 5
+            if 'g' in self.state[laneNr] or 'G' in self.state[laneNr]:
+                if arrived > self.pop[laneNr]:
+                    self.pop[laneNr] = arrived + 10
+                elif arrived >= self.pop[laneNr] - 10:
+                    self.pop[laneNr] += self.pop[laneNr] + 5
+                elif arrived < self.pop[laneNr]:
+                    self.pop[laneNr] = arrived + 5
+                else:
+                    print("ELSE: " + str(arrived) + " " + str(laneNr))
             else:
-                print("ELSE: " + str(arrived) + " " + str(laneNr))
+                if arrived > self.pop[laneNr]:
+                    self.pop[laneNr] = arrived - 10
+                elif arrived >= self.pop[laneNr] - 10:
+                    self.pop[laneNr] += self.pop[laneNr] - 5
+                elif arrived < self.pop[laneNr]:
+                    self.pop[laneNr] = arrived - 5
+                else:
+                    print("ELSE: " + str(arrived) + " " + str(laneNr))
 
             print("LOG OUTPUT: " + str(self.pop[laneNr]))
 
             for i in range(1, len(self.pop)-1):
-                if self.pop[i] > self.oldpop[i-1] and self.pop[i] > self.oldpop[i+1]:
-                    #self.pop[i] = random.randint(self.pop[i-1], self.pop[i])
+
+                if i != laneNr:
+                    if self.pop[i] > self.oldpop[i-1] and self.pop[i] > self.oldpop[i+1]:
+                        #self.pop[i] = random.randint(self.pop[i-1], self.pop[i])
+                        self.pop[i] = random.randint(2, 10)
+                    elif self.pop[i] < self.oldpop[i-1] and self.pop[i] < self.oldpop[i+1]:
+                        #self.pop[i] = random.randint(self.pop[i], self.pop[i+1])
+                        self.pop[i] = random.randint(10, 15)
+                    else:
+                        if self.pop[i-1] > self.pop[i+1]:
+                            self.pop[i-1], self.pop[i + 1] = self.pop[i+1], self.pop[i-1]
+                        #self.pop[i] = random.randint(self.pop[i-1], self.pop[i+1])
+                        self.pop[i] = random.randint(2, 15)
+
+            i = 0
+            if i != laneNr:
+
+                if self.pop[i] > self.pop[i+1]:
                     self.pop[i] = random.randint(2, 10)
-                elif self.pop[i] < self.oldpop[i-1] and self.pop[i] < self.oldpop[i+1]:
-                    #self.pop[i] = random.randint(self.pop[i], self.pop[i+1])
+                elif self.pop[i] < self.pop[i+1]:
                     self.pop[i] = random.randint(10, 15)
                 else:
-                    if self.pop[i-1] > self.pop[i+1]:
-                        self.pop[i-1], self.pop[i + 1] = self.pop[i+1], self.pop[i-1]
-                    #self.pop[i] = random.randint(self.pop[i-1], self.pop[i+1])
                     self.pop[i] = random.randint(2, 15)
-            i = 0
-            if self.pop[i] > self.pop[i+1]:
-                self.pop[i] = random.randint(2, 10)
-            elif self.pop[i] < self.pop[i+1]:
-                self.pop[i] = random.randint(10, 15)
-            else:
-                self.pop[i] = random.randint(2, 15)
             i = -1
-            if self.pop[i] > self.pop[i-1]:
-                self.pop[i] = random.randint(2, 10)
-            elif self.pop[i] < self.pop[i-1]:
-                self.pop[i] = random.randint(10, 15)
-            else:
-                self.pop[i] = random.randint(2, 15)
+            if self.pop[i] != self.pop[laneNr]:
+                if self.pop[i] > self.pop[i-1]:
+                    self.pop[i] = random.randint(2, 10)
+                elif self.pop[i] < self.pop[i-1]:
+                    self.pop[i] = random.randint(10, 15)
+                else:
+                    self.pop[i] = random.randint(2, 15)
             self.oldpop = self.pop
 
 
     def modify_xml(self):
-        et = xml.etree.ElementTree.parse("D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml")
+        et = xml.etree.ElementTree.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml")
         root = et.getroot()
 
-        for child in root.getchildren():
-            tl_id = child.get('id')
-            k = 0
+        #for child in root.getchildren():
+        #    tl_id = child.get('id')
+        k = 0
 
-            xmldoc1 = minidom.parse("D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml")
+        xmldoc1 = minidom.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml")
 
-            print("LOG POPULATION")
-            print(self.pop)
+        print("LOG POPULATION")
+        print(self.pop)
 
-            for s in xmldoc1.getElementsByTagName('phase'):
-                #print("LOG ATTRIBUTE: " + s.attributes['duration'].value)
-                s.attributes['duration'].value = str(self.pop[k])
+        for s in xmldoc1.getElementsByTagName('phase'):
+            #print("LOG ATTRIBUTE: " + s.attributes['duration'].value)
 
-                k += 1
-            xmldoc1.writexml(open('D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml', 'w'))
-            """
+            s.attributes['duration'].value = str(self.pop[k])
+            k += 1
+
+        xmldoc1.writexml(open('D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml', 'w', encoding="utf-8"))
+        """
             if tl_id == 0:
                 for phase in child.getchildren():
                     phase.set('duration', str(self.pop[k]))
                     k += 1
-            """
+        """
         #et = ET.ElementTree(itemlist)
         #et.write("D:/facultate/IA/RiLSA_Example/rilsa1_tls.add.xml")
 
@@ -125,11 +150,11 @@ class TimePopulation:
 class Simulation:
     sumoBinary = "C:/Program Files (x86)/DLR/Sumo/bin/sumo"
     sumoBinaryGui = "C:/Program Files (x86)/DLR/Sumo/bin/sumo-gui"
-    LogicLocation = "C:/Users/ntvid/Sumo/test/rilsa1_tls.add.xml"
+    LogicLocation = "D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml"
 
     def __init__(self):
 
-        self.sumo_cmd = [Simulation.sumoBinary, "-c", "D:/facultate/IA/RiLSA_Example/run.sumo.cfg"]
+        self.sumo_cmd = [Simulation.sumoBinary, "-c", "D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.sumocfg"]
         if 'SUMO_HOME' in os.environ:
             tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
             sys.path.append(tools)
@@ -137,7 +162,7 @@ class Simulation:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
     def run_gui(self):
-        sumo_cmd = [Simulation.sumoBinaryGui, "-c", "D:/facultate/IA/RiLSA_Example/run.sumo.cfg"]
+        sumo_cmd = [Simulation.sumoBinaryGui, "-c", "D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.sumocfg"]
         traci.start(sumo_cmd)
         step = 0
         arrived = 0
@@ -146,14 +171,14 @@ class Simulation:
         laneNr = 0
         tpArrived = 0
         tp = TimePopulation(len(itemlist))
-        while step < 2000:
+        while step < 2500:
             traci.simulationStep()
             step += 1
             if arrived != 0:
                 if laneNr >= len(itemlist):
                     laneNr = 0
-                tp.changeValues(tpArrived, laneNr)
-                tp.modify_xml()
+                    tp.changeValues(tpArrived, laneNr)
+                    tp.modify_xml()
                 laneNr += 1
                 tpArrived = traci.simulation.getArrivedNumber()
             arrived += traci.simulation.getArrivedNumber()

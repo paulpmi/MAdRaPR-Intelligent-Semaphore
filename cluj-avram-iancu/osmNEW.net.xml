@@ -1,0 +1,75 @@
+<?xml version="1.0" ?><net junctionCornerDetail="5" version="0.27" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location convBoundary="0.00,0.00,1696.17,926.85" netOffset="-697737.89,-5182712.48" origBoundary="23.589835,46.768648,23.612430,46.776475" projParameter="+proj=utm +zone=34 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"/>
+
+    <type allow="pedestrian" id="highway.bridleway" numLanes="1" oneway="1" priority="1" speed="2.78" width="2.00"/>
+    <type allow="bus" id="highway.bus_guideway" numLanes="1" oneway="1" priority="1" speed="8.33"/>
+    <type allow="bicycle" id="highway.cycleway" numLanes="1" oneway="0" priority="1" speed="5.56" width="1.00"/>
+    <type allow="pedestrian" id="highway.footway" numLanes="1" oneway="1" priority="1" speed="2.78" width="2.00"/>
+    <type allow="army" id="highway.ford" numLanes="1" oneway="0" priority="1" speed="2.78"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.living_street" numLanes="1" oneway="0" priority="3" speed="2.78"/>
+    <type allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" id="highway.motorway" numLanes="2" oneway="1" priority="13" speed="44.44"/>
+    <type allow="private emergency authority army vip passenger hov taxi bus coach delivery truck trailer motorcycle evehicle custom1 custom2" id="highway.motorway_link" numLanes="1" oneway="1" priority="12" speed="22.22"/>
+    <type allow="bicycle pedestrian" id="highway.path" numLanes="1" oneway="1" priority="1" speed="2.78" width="2.00"/>
+    <type allow="pedestrian" id="highway.pedestrian" numLanes="1" oneway="1" priority="1" speed="2.78" width="2.00"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.primary" numLanes="2" oneway="0" priority="9" speed="27.78"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.primary_link" numLanes="1" oneway="0" priority="8" speed="22.22"/>
+    <type allow="vip" id="highway.raceway" numLanes="2" oneway="0" priority="14" speed="83.33"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.residential" numLanes="1" oneway="0" priority="4" speed="13.89"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.secondary" numLanes="2" oneway="0" priority="7" speed="27.78"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.secondary_link" numLanes="1" oneway="0" priority="6" speed="22.22"/>
+    <type allow="delivery bicycle pedestrian" id="highway.service" numLanes="1" oneway="0" priority="2" speed="5.56"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.services" numLanes="1" oneway="0" priority="1" speed="8.33"/>
+    <type allow="pedestrian" id="highway.stairs" numLanes="1" oneway="1" priority="1" speed="1.39" width="2.00"/>
+    <type allow="pedestrian" id="highway.step" numLanes="1" oneway="1" priority="1" speed="1.39" width="2.00"/>
+    <type allow="pedestrian" id="highway.steps" numLanes="1" oneway="1" priority="1" speed="1.39" width="2.00"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.tertiary" numLanes="1" oneway="0" priority="6" speed="22.22"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.tertiary_link" numLanes="1" oneway="0" priority="5" speed="22.22"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.track" numLanes="1" oneway="0" priority="1" speed="5.56"/>
+    <type disallow="tram rail_urban rail rail_electric bicycle pedestrian ship" id="highway.trunk" numLanes="2" oneway="0" priority="11" speed="27.78"/>
+    <type disallow="tram rail_urban rail rail_electric bicycle pedestrian ship" id="highway.trunk_link" numLanes="1" oneway="0" priority="10" speed="22.22"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.unclassified" numLanes="1" oneway="0" priority="5" speed="13.89"/>
+    <type disallow="tram rail_urban rail rail_electric ship" id="highway.unsurfaced" numLanes="1" oneway="0" priority="1" speed="8.33"/>
+    <type allow="rail_urban" id="railway.light_rail" numLanes="1" oneway="1" priority="15" speed="27.78"/>
+    <type allow="rail" id="railway.preserved" numLanes="1" oneway="1" priority="15" speed="27.78"/>
+    <type allow="rail rail_electric" id="railway.rail" numLanes="1" oneway="1" priority="15" speed="83.33"/>
+    <type allow="rail_urban" id="railway.subway" numLanes="1" oneway="1" priority="15" speed="27.78"/>
+    <type allow="tram" id="railway.tram" numLanes="1" oneway="1" priority="15" speed="13.89"/>
+
+    <edge function="internal" id=":122972761_0">
+        <lane allow="bus bicycle" id=":122972761_0_0" index="0" length="4.82" shape="233.91,372.10 233.11,370.84 233.07,369.92 233.78,369.33 235.24,369.08" speed="27.78"/>
+    </edge>
+    <edge function="internal" id=":1883241270_0">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":1883241270_0_0" index="0" length="4.43" shape="456.91,224.82 455.09,228.86" speed="13.89"/>
+    </edge>
+    <edge function="internal" id=":2505063282_0">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_0_0" index="0" length="2.62" shape="484.61,498.65 487.18,499.15" speed="20.84"/>
+    </edge>
+    <edge function="internal" id=":2505063282_1">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_1_0" index="0" length="4.31" shape="484.61,498.65 480.28,500.28" speed="27.78"/>
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_1_1" index="1" length="4.31" shape="486.06,495.68 481.77,497.34" speed="27.78"/>
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_1_2" index="2" length="4.31" shape="487.52,492.72 483.27,494.40" speed="27.78"/>
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_1_3" index="3" length="4.31" shape="488.97,489.76 484.77,491.45" speed="27.78"/>
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_1_4" index="4" length="4.31" shape="490.42,486.80 486.27,488.51" speed="27.78"/>
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_1_5" index="5" length="4.31" shape="491.88,483.84 487.76,485.57" speed="27.78"/>
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_1_6" index="6" length="4.31" shape="491.88,483.84 489.26,482.63" speed="27.78"/>
+    </edge>
+    <edge function="internal" id=":2505063282_8">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_8_0" index="0" length="19.34" shape="490.05,480.52 487.76,485.98 486.52,490.91 486.33,495.30 487.18,499.15" speed="20.84"/>
+    </edge>
+    <edge function="internal" id=":2505063282_9">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_9_0" index="0" length="22.10" shape="487.09,479.07 484.56,485.18 483.22,490.77 483.07,495.84 484.12,500.38" speed="20.84"/>
+    </edge>
+    <edge function="internal" id=":2505063282_10">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_10_0" index="0" length="12.57" shape="484.13,477.61 482.82,481.24 482.73,484.26 483.88,486.69 486.27,488.51" speed="27.78"/>
+    </edge>
+    <edge function="internal" id=":2505063282_11">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_11_0" index="0" length="12.75" shape="481.17,476.16 480.69,478.56 481.62,480.93 483.98,483.27 487.76,485.57" speed="27.78"/>
+    </edge>
+    <edge function="internal" id=":2505063282_12">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_12_0" index="0" length="10.76" shape="481.17,476.16 481.33,477.27 482.73,478.72 485.37,480.51 489.26,482.63" speed="27.78"/>
+    </edge>
+    <edge function="internal" id=":2505063282_13">
+        <lane disallow="tram rail_urban rail rail_electric ship" id=":2505063282_13_0" index="0" length="10.22" shape="481.17,476.16 490.76,479.69" speed="27.78"/>
+    </edge>
+    

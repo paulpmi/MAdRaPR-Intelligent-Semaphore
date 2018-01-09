@@ -7,7 +7,7 @@ import os
 import time
 import sys
 from copy import deepcopy
-xmldoc = minidom.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml", )
+xmldoc = minidom.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-avram-iancu/osm.net.xml", )
 itemlist = xmldoc.getElementsByTagName('phase')
 #print(len(itemlist))
 #print(itemlist[0].attributes['duration'].value)
@@ -113,14 +113,14 @@ class TimePopulation:
 
 
     def modify_xml(self):
-        et = xml.etree.ElementTree.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml")
+        et = xml.etree.ElementTree.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-avram-iancu/osm.net.xml")
         root = et.getroot()
 
         #for child in root.getchildren():
         #    tl_id = child.get('id')
         k = 0
 
-        xmldoc1 = minidom.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml")
+        xmldoc1 = minidom.parse("D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-avram-iancu/osm.net.xml")
 
         print("LOG POPULATION")
         print(self.pop)
@@ -131,7 +131,7 @@ class TimePopulation:
             s.attributes['duration'].value = str(self.pop[k])
             k += 1
 
-        xmldoc1.writexml(open('D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.net.xml', 'w', encoding="utf-8"))
+        xmldoc1.writexml(open('D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-avram-iancu/osm.net.xml', 'w', encoding="utf-8"))
         """
             if tl_id == 0:
                 for phase in child.getchildren():
@@ -154,7 +154,7 @@ class Simulation:
 
     def __init__(self):
 
-        self.sumo_cmd = [Simulation.sumoBinary, "-c", "D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.sumocfg"]
+        self.sumo_cmd = [Simulation.sumoBinary, "-c", "D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-avram-iancu/osm.sumocfg"]
         if 'SUMO_HOME' in os.environ:
             tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
             sys.path.append(tools)
@@ -162,7 +162,7 @@ class Simulation:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
     def run_gui(self):
-        sumo_cmd = [Simulation.sumoBinaryGui, "-c", "D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-centru-500/osm.sumocfg"]
+        sumo_cmd = [Simulation.sumoBinaryGui, "-c", "D:/facultate/IA/MAdRaPR-Intelligent-Semaphore/cluj-avram-iancu/osm.sumocfg"]
         traci.start(sumo_cmd)
         step = 0
         arrived = 0
@@ -171,7 +171,7 @@ class Simulation:
         laneNr = 0
         tpArrived = 0
         tp = TimePopulation(len(itemlist))
-        while step < 2500:
+        while step < 500:
             traci.simulationStep()
             step += 1
             if arrived != 0:
@@ -192,7 +192,7 @@ class Simulation:
         arrived = 0
         deaparted = 0
         tp = TimePopulation(len(itemlist))
-        while step < 2000:
+        while step < 500:
             traci.simulationStep()
             step += 1
             tp.changeValues()

@@ -1221,30 +1221,30 @@
     </edge>
 
     <tlLogic id="2505063282" offset="0" programID="0" type="actuated">
-        <phase duration="23" maxDur="50" minDur="5" state="GGGGGGGGrrrrrr"/>
-        <phase duration="10" state="yyyyyyyyrrrrrr"/>
-        <phase duration="2" maxDur="50" minDur="5" state="rrrrrrrrGGGGGG"/>
-        <phase duration="9" state="rrrrrrrryyyyyy"/>
+        <phase duration="11" maxDur="50" minDur="5" state="GGGGGGGGrrrrrr"/>
+        <phase duration="7" state="yyyyyyyyrrrrrr"/>
+        <phase duration="9" maxDur="50" minDur="5" state="rrrrrrrrGGGGGG"/>
+        <phase duration="10" state="rrrrrrrryyyyyy"/>
     </tlLogic>
     <tlLogic id="59046578" offset="0" programID="0" type="actuated">
-        <phase duration="5" maxDur="50" minDur="5" state="GGGGggGggrr"/>
-        <phase duration="5" state="yyyyggyggrr"/>
+        <phase duration="10" maxDur="50" minDur="5" state="GGGGggGggrr"/>
+        <phase duration="6" state="yyyyggyggrr"/>
         <phase duration="11" maxDur="50" minDur="5" state="rrrrGGrGGrr"/>
-        <phase duration="13" state="rrrryyryyrr"/>
-        <phase duration="2" maxDur="50" minDur="5" state="GrrrrrrrGGG"/>
-        <phase duration="5" state="yrrrrrrryyy"/>
+        <phase duration="6" state="rrrryyryyrr"/>
+        <phase duration="4" maxDur="50" minDur="5" state="GrrrrrrrGGG"/>
+        <phase duration="2" state="yrrrrrrryyy"/>
     </tlLogic>
     <tlLogic id="59046752" offset="0" programID="0" type="actuated">
-        <phase duration="2" maxDur="50" minDur="5" state="GGGGGrrrrrr"/>
-        <phase duration="9" state="yyyyyrrrrrr"/>
-        <phase duration="5" maxDur="50" minDur="5" state="rrrrrGGGGGG"/>
-        <phase duration="9" state="rrrrryyyyyy"/>
+        <phase duration="5" maxDur="50" minDur="5" state="GGGGGrrrrrr"/>
+        <phase duration="6" state="yyyyyrrrrrr"/>
+        <phase duration="15" maxDur="50" minDur="5" state="rrrrrGGGGGG"/>
+        <phase duration="14" state="rrrrryyyyyy"/>
     </tlLogic>
     <tlLogic id="59049339" offset="0" programID="0" type="actuated">
-        <phase duration="7" maxDur="50" minDur="5" state="GGGGGrrrrrr"/>
-        <phase duration="5" state="yyyyyrrrrrr"/>
-        <phase duration="13" maxDur="50" minDur="5" state="rrrrrGGGGGG"/>
-        <phase duration="9" state="rrrrryyyyyy"/>
+        <phase duration="12" maxDur="50" minDur="5" state="GGGGGrrrrrr"/>
+        <phase duration="2" state="yyyyyrrrrrr"/>
+        <phase duration="9" maxDur="50" minDur="5" state="rrrrrGGGGGG"/>
+        <phase duration="15" state="rrrrryyyyyy"/>
     </tlLogic>
 
     <junction id="122972761" incLanes="23582606#4_0 23582606#4_1 23582606#4_2" intLanes=":122972761_0_0" shape="234.60,370.54 230.59,379.60 234.56,370.63" type="priority" x="234.58" y="370.59">

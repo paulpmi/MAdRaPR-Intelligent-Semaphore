@@ -1,29 +1,31 @@
+import threading
+
 from swarm import Swarm
 
 
 class Controller:
-    def __init__(self, intersection, simulation):
+    def __init__(self, intersections, simulation):
         self.w = 1
         self.c1 = 2
         self.c2 = 1
-        self.intersection = intersection
+        self.intersections = intersections
         self.max_iterations = 0
         self.population_size = 0
         self.population = ""
         self.simulation = simulation
-        self.load_data("mock file name", intersection)
+        self.load_data("mock file name", intersections)
 
     def load_data(self, filename, intersection):
         # do a read from file
-        self.c1 = 1
+        self.c1 = 2
         self.c2 = 2
-        self.population_size = 10
-        self.max_iterations = 10
+        self.population_size = 100
+        self.max_iterations = 30
         self.population = Swarm(self.population_size, intersection)
 
     def iteration(self):
         for particle in self.population.particles:
-            particle.update(self.w, self.c1, self.c2,self.population.get_best_particle())
+            particle.update(self.w, self.c1, self.c2, self.population.get_best_particle())
             particle.evaluate(self.simulation)
 
     def run_alg(self):
@@ -33,5 +35,5 @@ class Controller:
         for p in self.population.particles:
             if p.fitness > pBest.fitness:
                 pBest = p
-            print p.fitness
-        return self.intersection.id, pBest,
+        pBest.modify_xml(self.simulation)
+        return pBest

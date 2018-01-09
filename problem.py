@@ -1,3 +1,4 @@
+import math
 import xml
 
 from pso.controller import Controller
@@ -6,30 +7,53 @@ from sumo.sumo import Simulation
 
 
 class Prooblem:
-    def __init__(self):
+    def __init__(self, path, logic):
         self.lights = []
+        self.sim = Simulation(path, logic)
         self.load_data()
 
     def load_data(self):
-        et = xml.etree.ElementTree.parse(Simulation.LogicLocation)
+        et = xml.etree.ElementTree.parse(self.sim.LogicLocation)
         root = et.getroot()
         for child in root.getchildren():
-            tl_id = child.get('id')
-            phases = []
-            for phase in child.getchildren():
-                phases.append(int(phase.get('duration')))
-            self.lights.append(Light(tl_id, phases))
+            if child.tag == "tlLogic":
+                tl_id = child.get('id')
+                phases = []
+                for phase in child.getchildren():
+                    val = phase.get('duration')
+                    phases.append(int(math.floor(float(val))))
+                self.lights.append(Light(tl_id, phases))
 
     def run_alg(self):
-        ctrls = []
-        sim = Simulation()
-        for light in self.lights:
-            ctrls.append(Controller(light,sim))
+        # path = "C:/Users/ntvid/Sumo/cluj-centru-500/"
 
-        sim.run_gui()
-        for ctrl in ctrls:
-            tl_id, particle = ctrl.run_alg()
-            particle.modify_xml()
-            print tl_id,particle.position,particle.fitness
-        sim.run_gui()
-Prooblem().run_alg()
+        ctrl = Controller(self.lights, self.sim)
+
+        self.sim.run_gui()
+        particle = ctrl.run_alg()
+        particle.modify_xml(self.sim)
+        print particle.info, particle.position, particle.fitness
+        self.sim.run_gui()
+
+    def run_with_single_start(self):
+        # Calculate phases
+        self.sim.start_simulation()
+        ctrl = Controller(self.lights, self.sim)
+        particle = ctrl.run_alg()
+        print particle.info
+        self.sim.close_simulation()
+
+        # See result
+        self.sim.run_gui()
+        self.sim.get_arrived_and_departed()
+        self.sim.close_simulation()
+
+    def run_gui_only(self):
+        self.sim.run_gui()
+
+    def run_solution(self):
+        self.sim.run_solution()
+
+
+# Prooblem().run_gui_only()
+Prooblem("C:/Users/ntvid/Sumo/cluj-centru-500/", "osm.net.xml").run_alg()

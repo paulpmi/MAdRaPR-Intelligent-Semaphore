@@ -1,27 +1,27 @@
-import threading
-
+from utilis.controller import BaseController
 from swarm import Swarm
 
 
-class Controller:
-    def __init__(self, intersections, simulation):
+class Controller(BaseController):
+    def __init__(self, lights, simulation):
+        super(lights,simulation)
         self.w = 1
         self.c1 = 2
         self.c2 = 1
-        self.intersections = intersections
+        self.lights = lights
         self.max_iterations = 0
         self.population_size = 0
         self.population = ""
         self.simulation = simulation
-        self.load_data("mock file name", intersections)
+        self.load_data("mock file name", lights)
 
-    def load_data(self, filename, intersection):
+    def load_data(self, filename, lights):
         # do a read from file
         self.c1 = 2
         self.c2 = 2
         self.population_size = 100
         self.max_iterations = 30
-        self.population = Swarm(self.population_size, intersection)
+        self.population = Swarm(self.population_size, lights)
 
     def iteration(self):
         for particle in self.population.particles:
@@ -35,5 +35,5 @@ class Controller:
         for p in self.population.particles:
             if p.fitness > pBest.fitness:
                 pBest = p
-        pBest.modify_xml(self.simulation)
+        pBest.modify_sumo_configuration(self.simulation)
         return pBest

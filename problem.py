@@ -31,7 +31,7 @@ class Prooblem:
 
         self.sim.run_gui()
         particle = ctrl.run_alg()
-        particle.modify_xml(self.sim)
+        particle.modify_sumo_configuration(self.sim)
         print particle.info, particle.position, particle.fitness
         self.sim.run_gui()
 

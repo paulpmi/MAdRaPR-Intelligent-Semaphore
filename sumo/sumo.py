@@ -3,6 +3,10 @@ import sys
 
 import traci
 
+DLR_SUMO_BIN_SUMO_GUI = "C:/Program Files (x86)/DLR/Sumo/bin/sumo-gui"
+
+DLR_SUMO_BIN_SUMO = "C:/Program Files (x86)/DLR/Sumo/bin/sumo"
+
 
 def toMillis(seconds):
     return seconds * 1000
@@ -13,8 +17,8 @@ def toSeconds(millis):
 
 
 class Simulation:
-    sumoBinary = "C:/Program Files (x86)/DLR/Sumo/bin/sumo"
-    sumoBinaryGui = "C:/Program Files (x86)/DLR/Sumo/bin/sumo-gui"
+    sumoBinary = DLR_SUMO_BIN_SUMO
+    sumoBinaryGui = DLR_SUMO_BIN_SUMO_GUI
 
     def __init__(self, path,logic):
         self.stated = False
@@ -64,6 +68,9 @@ class Simulation:
         return arrived, departed
 
     def run_simul_until_no_more_cars(self):
+        step = 0
+        arrived = 0
+        departed = 0
         while step < self.time:
             traci.simulationStep()
             step += 1

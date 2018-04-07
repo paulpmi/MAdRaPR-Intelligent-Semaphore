@@ -2,6 +2,7 @@ import math
 import xml
 
 from pso.controller import Controller
+from random.random_search_controller import RandomSearchController
 from sumo.lights import Light
 from sumo.sumo import Simulation
 
@@ -24,14 +25,14 @@ class Prooblem:
                     phases.append(int(math.floor(float(val))))
                 self.lights.append(Light(tl_id, phases))
 
-    def run_alg(self):
+    def run_pso_alg(self):
         # path = "C:/Users/ntvid/Sumo/cluj-centru-500/"
 
         ctrl = Controller(self.lights, self.sim)
 
         self.sim.run_gui()
         particle = ctrl.run_alg()
-        particle.modify_xml(self.sim)
+        particle.modify_sumo_configuration(self.sim)
         print particle.info, particle.position, particle.fitness
         self.sim.run_gui()
 
@@ -54,6 +55,14 @@ class Prooblem:
     def run_solution(self):
         self.sim.run_solution()
 
+    def run_random_search_alg(self):
+        ctrl = RandomSearchController(self.lights, self.sim)
+
+        self.sim.run_gui()
+        particle = ctrl.run_alg()
+        particle.modify_sumo_configuration(self.sim)
+        print particle.info, particle.position, particle.fitness
+        self.sim.run_gui()
 
 # Prooblem().run_gui_only()
-Prooblem("C:/Users/ntvid/Sumo/cluj-centru-500/", "osm.net.xml").run_alg()
+Prooblem("C:/Users/ntvid/Sumo/cluj-centru-500/", "osm.net.xml").run_random_search_alg()

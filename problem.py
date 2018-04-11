@@ -1,13 +1,15 @@
 import math
 import xml
 
+from bees.hive_controller import HiveController
 from pso.controller import Controller
-from random.random_search_controller import RandomSearchController
+from random_search.random_search_controller import RandomSearchController
 from sumo.lights import Light
 from sumo.sumo import Simulation
+from sumo_io.configuration_io import ConfigurationIO
 
 
-class Prooblem:
+class Problem:
     def __init__(self, path, logic):
         self.lights = []
         self.sim = Simulation(path, logic)
@@ -59,10 +61,17 @@ class Prooblem:
         ctrl = RandomSearchController(self.lights, self.sim)
 
         self.sim.run_gui()
-        particle = ctrl.run_alg()
-        particle.modify_sumo_configuration(self.sim)
-        print particle.info, particle.position, particle.fitness
+        fitness, solution = ctrl.run_alg()
+        ConfigurationIO.modify_sumo_configuration(self.sim, solution)
+        print fitness, solution
+        self.sim.run_gui()
+
+    def run_abc_alg(self):
+        ctrl = HiveController(self.lights, self.sim)
+        bee = ctrl.run_alg()
+        ConfigurationIO.modify_sumo_configuration(self.sim, bee.solution)
+        print bee.fitness, bee.solution
         self.sim.run_gui()
 
 # Prooblem().run_gui_only()
-Prooblem("C:/Users/ntvid/Sumo/cluj-centru-500/", "osm.net.xml").run_random_search_alg()
+Problem("C:/Users/User/Sumo/2018-04-07-22-42-35/", "osm.net.xml").run_abc_alg()

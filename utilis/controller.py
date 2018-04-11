@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 
 class BaseController:
-    def __init__(self, simulation, lights):
+    def __init__(self, lights, simulation):
         self.simulation = simulation
         self.lights = lights
 

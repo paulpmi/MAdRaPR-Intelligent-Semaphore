@@ -1,5 +1,9 @@
 import xml
 
+import math
+
+from sumo.lights import Light
+
 
 class ConfigurationIO:
     def __init__(self):
@@ -16,3 +20,18 @@ class ConfigurationIO:
                     phase.set('duration', str(solution[k]))
                     k += 1
         et.write(simulation.LogicLocation)
+
+    @staticmethod
+    def load_simulation_data(sim):
+        lights = []
+        et = xml.etree.ElementTree.parse(sim.LogicLocation)
+        root = et.getroot()
+        for child in root.getchildren():
+            if child.tag == "tlLogic":
+                tl_id = child.get('id')
+                phases = []
+                for phase in child.getchildren():
+                    val = phase.get('duration')
+                    phases.append(int(math.floor(float(val))))
+                lights.append(Light(tl_id, phases))
+        return lights

@@ -11,7 +11,7 @@ class BaseController:
         pass
 
     @abstractmethod
-    def load_data(self,filename, lights):
+    def load_data(self, lights):
         pass
 
     @abstractmethod

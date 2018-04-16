@@ -6,25 +6,25 @@ from utilis.controller import BaseController
 
 
 class RandomSearchController(BaseController):
-    def __init__(self, lights, simulation):
+    def __init__(self, lights, simulation, no_iterations, population_siez):
         BaseController.__init__(self, lights, simulation)
-        self.no_iterations = 0
-        self.population_size = -1
+        self.no_iterations = no_iterations
+        self.population_size = population_siez
         self.population = ""
         self.best_solution = ""
         self.best_fitness = -1
-        self.load_data("mok file", lights)
+        self.load_data(lights)
 
     def run_alg(self):
 
         for i in range(0, self.no_iterations):
             self.iteration()
-        ConfigurationIO.modify_sumo_configuration(self.simulation, self.best_solution.solution)
-        return self.best_fitness, self.best_solution.solution
+        if self.no_iterations >0:
+            ConfigurationIO.modify_sumo_configuration(self.simulation, self.best_solution.solution)
+            return self.best_fitness, self.best_solution.solution
+        return -1,[]
 
-    def load_data(self, filename, lights):
-        self.no_iterations = 20
-        self.population_size = 2
+    def load_data(self, lights):
         self.population = RandomSearchPopulation(self.population_size, lights, 5, 50)
 
     def iteration(self):

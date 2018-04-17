@@ -2,7 +2,7 @@ import math
 import xml
 
 from bees.hive_controller import HiveController
-from pso.controller import Controller
+from pso.psocontroller import PSOController
 from random_search.random_search_controller import RandomSearchController
 from sumo.lights import Light
 from sumo.sumo import Simulation
@@ -30,7 +30,7 @@ class Problem:
     def run_pso_alg(self):
         # path = "C:/Users/ntvid/Sumo/cluj-centru-500/"
 
-        ctrl = Controller(self.lights, self.sim)
+        ctrl = PSOController(self.lights, self.sim)
 
         self.sim.run_gui()
         particle = ctrl.run_alg()
@@ -41,7 +41,7 @@ class Problem:
     def run_with_single_start(self):
         # Calculate phases
         self.sim.start_simulation()
-        ctrl = Controller(self.lights, self.sim)
+        ctrl = PSOController(self.lights, self.sim)
         particle = ctrl.run_alg()
         print particle.info
         self.sim.close_simulation()

@@ -87,7 +87,7 @@ class Simulation:
         self.stated = True
 
     def get_traffic_lights(self):
-        return traci.trafficlights.getIDList()
+        return traci.trafficlight.getIDList()
 
     def set_all_phases(self, solution):
         programs = []

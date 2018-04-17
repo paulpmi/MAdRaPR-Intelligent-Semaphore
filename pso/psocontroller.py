@@ -3,25 +3,20 @@ from utilis.controller import BaseController
 from swarm import Swarm
 
 
-class Controller(BaseController):
-    def __init__(self, lights, simulation):
-        super(lights,simulation)
-        self.w = 1
-        self.c1 = 2
-        self.c2 = 1
+class PSOController(BaseController):
+    def __init__(self, lights, simulation, no_iterations, population_size, inertia_c, cognitive_l_c, social_l_c):
+        BaseController.__init__(self, lights, simulation)
+        self.w = inertia_c
+        self.c1 = cognitive_l_c
+        self.c2 = social_l_c
         self.lights = lights
-        self.max_iterations = 0
-        self.population_size = 0
+        self.max_iterations = no_iterations
+        self.population_size = population_size
         self.population = ""
         self.simulation = simulation
-        self.load_data("mock file name", lights)
+        self.load_data(lights)
 
-    def load_data(self, filename, lights):
-        # do a read from file
-        self.c1 = 2
-        self.c2 = 2
-        self.population_size = 100
-        self.max_iterations = 30
+    def load_data(self, lights):
         self.population = Swarm(self.population_size, lights)
 
     def iteration(self):
@@ -36,5 +31,4 @@ class Controller(BaseController):
         for p in self.population.particles:
             if p.fitness > pBest.fitness:
                 pBest = p
-        ConfigurationIO.modify_sumo_configuration(self.simulation,pBest.position)
-        return pBest
+        return pBest.fitness, pBest.position

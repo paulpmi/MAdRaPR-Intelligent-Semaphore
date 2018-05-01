@@ -2,6 +2,8 @@ import xml
 
 import math
 
+import os
+
 from sumo.lights import Light
 
 
@@ -35,3 +37,10 @@ class ConfigurationIO:
                     phases.append(int(math.floor(float(val))))
                 lights.append(Light(tl_id, phases))
         return lights
+
+    @staticmethod
+    def get_simulations(path):
+        dirs = []
+        if os.path.exists(path):
+            dirs = os.listdir(path)
+        return dirs

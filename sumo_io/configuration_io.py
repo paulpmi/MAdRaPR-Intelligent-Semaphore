@@ -8,6 +8,7 @@ from sumo.lights import Light
 
 
 class ConfigurationIO:
+    add_simulation_file_location = "tools\\osmWebWizard.py"
     def __init__(self):
         pass
 
@@ -44,3 +45,14 @@ class ConfigurationIO:
         if os.path.exists(path):
             dirs = os.listdir(path)
         return dirs
+
+    @staticmethod
+    def verify_simulation_files(location, t_logic):
+        return location and t_logic and os.path.exists(location + t_logic)
+
+    @staticmethod
+    def add_simulation(self):
+        path = os.environ["SUMO_HOME"]
+        if path:
+            path += ConfigurationIO.add_simulation_file_location
+            os.startfile(path)

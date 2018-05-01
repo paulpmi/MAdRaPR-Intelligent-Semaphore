@@ -15,10 +15,10 @@ from sumo_io.configuration_io import ConfigurationIO
 class MainScreen(GridLayout):
     selected_color = [200, 44, 44, 0.7]
     unselected_color = [1, 1, 1, 1]
-    path = "C:\Users\User\Sumo"
+    path = "C:/Users/User/Sumo/"
+    t_logic = "osm.net.xml"
 
     def __init__(self, **kwargs):
-
         super(MainScreen, self).__init__(**kwargs)
         self.orientation = 'tb-lr'
         self.pressed_button = ""
@@ -65,6 +65,7 @@ class MainScreen(GridLayout):
         # actions
         self.actions = BoxLayout(orientation='vertical')
         self.add_simulation_button = Button(text="Add Simulation", )
+        self.add_simulation_button.bind(on_press=ConfigurationIO.add_simulation)
 
         self.run_simulation_button = Button(text="Run Simulation")
         self.run_simulation_button.bind(on_press=self.run_alg)
@@ -92,7 +93,9 @@ class MainScreen(GridLayout):
         instance.algorithm_manager.set_view(RandomView())
 
     def run_alg(instance, values):
-        instance.algorithm_manager.run_alg("", "")
+        location = MainScreen.path + instance.list_adapter.selection[0].text+"/"
+        if ConfigurationIO.verify_simulation_files(location, MainScreen.t_logic):
+            instance.algorithm_manager.run_alg(location, MainScreen.t_logic)
 
 
 class AlgorithmManager(BoxLayout):

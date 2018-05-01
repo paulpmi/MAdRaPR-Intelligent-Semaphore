@@ -28,7 +28,6 @@ class RandomView(BoxLayout):
         print('User pressed enter in', value)
 
     def run_alg(self, path, logic):
-        path, logic = "C:/Users/User/Sumo/2018-04-07-22-42-35/", "osm.net.xml"
         no_generations = 0
         population_size = 0
         try:

@@ -4,11 +4,19 @@ import math
 
 import os
 
+import subprocess
+
 from sumo.lights import Light
+
+
+# import imp
+#
+# osmWizardModule = imp.load_source('osmWebWizard.name', 'C:/Program Files (x86)/DLR/Sumo/tools/osmWebWizard.py')
 
 
 class ConfigurationIO:
     add_simulation_file_location = "tools\\osmWebWizard.py"
+
     def __init__(self):
         pass
 
@@ -51,8 +59,24 @@ class ConfigurationIO:
         return location and t_logic and os.path.exists(location + t_logic)
 
     @staticmethod
-    def add_simulation(self):
+    def add_simulation():
         path = os.environ["SUMO_HOME"]
-        if path:
-            path += ConfigurationIO.add_simulation_file_location
-            os.startfile(path)
+        path += ConfigurationIO.add_simulation_file_location
+        os.startfile(path)
+
+    @staticmethod
+    def get_latest_simulation(path, existing_data):
+        dirs = ConfigurationIO.get_simulations(path)
+        for simulation_name in dirs:
+            if simulation_name not in existing_data:
+                return simulation_name
+        return ""
+
+    @staticmethod
+    def does_path_exist(path):
+        return os.path.exists(path)
+
+    @staticmethod
+    def set_simulation_name(path,old_name,new_name):
+        if os.path.exists(path+old_name):
+            os.rename(os.path.join(path, old_name), os.path.join(path, new_name))

@@ -12,6 +12,7 @@ from gui.app_view.pso_alg_view import PSOView
 from gui.app_view.radom_alg_view import RandomView
 from kivy.uix.listview import ListItemButton, ListView
 
+from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
 
 
@@ -70,10 +71,14 @@ class MainScreen(GridLayout):
         self.add_simulation_button = Button(text="Add Simulation", )
         self.add_simulation_button.bind(on_press=self.add_sim)
 
+        self.run_algorithm_button = Button(text="Run Algorithm")
+        self.run_algorithm_button.bind(on_press=self.run_alg)
+
         self.run_simulation_button = Button(text="Run Simulation")
-        self.run_simulation_button.bind(on_press=self.run_alg)
+        self.run_simulation_button.bind(on_press=self.run_sim)
 
         self.actions.add_widget(self.add_simulation_button)
+        self.actions.add_widget(self.run_algorithm_button)
         self.actions.add_widget(self.run_simulation_button)
         self.add_widget(self.actions)
 
@@ -102,11 +107,14 @@ class MainScreen(GridLayout):
         new_simulation = ConfigurationIO.get_latest_simulation(MainScreen.path, self.list_adapter.data)
         if not new_simulation:
             return
-        while True:
-            if new_simulation and not ConfigurationIO.does_path_exist(MainScreen.path + new_name):
-                ConfigurationIO.set_simulation_name(MainScreen.path, new_simulation, new_name)
-                popup.dismiss()
-                break
+        if new_simulation and not ConfigurationIO.does_path_exist(MainScreen.path + new_name):
+            ConfigurationIO.set_simulation_name(MainScreen.path, new_simulation, new_name)
+            self.repopulate_list(new_name)
+            popup.dismiss()
+
+    def repopulate_list(self, new_name):
+        self.list_adapter.data.append(new_name)
+        self.list_view._trigger_reset_populate()
 
     def pso_press_action(instance, values):
         instance.pressed_button.color = MainScreen.unselected_color[:]
@@ -130,6 +138,15 @@ class MainScreen(GridLayout):
         location = MainScreen.path + instance.list_adapter.selection[0].text + "/"
         if ConfigurationIO.verify_simulation_files(location, MainScreen.t_logic):
             instance.algorithm_manager.run_alg(location, MainScreen.t_logic)
+
+    def run_sim(instance, values):
+        location = MainScreen.path + instance.get_current_selection()
+        if ConfigurationIO.verify_simulation_files(location, MainScreen.t_logic):
+                sim = Simulation(location,MainScreen.t_logic)
+                arrived, departed = sim.run_gui()
+
+    def get_current_selection(self):
+        return self.list_adapter.selection[0].text + "/"
 
 
 class AlgorithmManager(BoxLayout):

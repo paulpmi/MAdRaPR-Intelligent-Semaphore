@@ -37,7 +37,7 @@ class Simulation:
         arrived, departed = self.get_arrived_and_departed()
         self.close_simulation()
 
-        print arrived, departed
+        return arrived, departed
 
     def run_simulation(self):
         self.start_simulation()

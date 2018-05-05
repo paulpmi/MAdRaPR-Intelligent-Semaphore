@@ -1,3 +1,5 @@
+from threading import Thread
+
 from kivy.adapters.listadapter import ListAdapter
 from kivy.uix.boxlayout import BoxLayout
 
@@ -8,10 +10,12 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 
 from gui.app_view.abc_alg_view import ABCView
+from gui.app_view.loading_popup import LoadingPopup
 from gui.app_view.pso_alg_view import PSOView
 from gui.app_view.radom_alg_view import RandomView
 from kivy.uix.listview import ListItemButton, ListView
 
+from gui.thread_manager import ThreadManager
 from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
 
@@ -26,9 +30,12 @@ class MainScreen(GridLayout):
         super(MainScreen, self).__init__(**kwargs)
         self.orientation = 'tb-lr'
         self.pressed_button = ""
+        self.loading_popup = LoadingPopup()
         # handle upper layout
         self.side_bar = BoxLayout(orientation='vertical')
         self.add_widget(self.side_bar)
+
+
 
         # handle list
 
@@ -137,13 +144,15 @@ class MainScreen(GridLayout):
     def run_alg(instance, values):
         location = MainScreen.path + instance.list_adapter.selection[0].text + "/"
         if ConfigurationIO.verify_simulation_files(location, MainScreen.t_logic):
-            instance.algorithm_manager.run_alg(location, MainScreen.t_logic)
+            popup = LoadingPopup()
+            ThreadManager.run_thread_with_popup_and_args(instance.algorithm_manager.run_alg, popup,location,MainScreen.t_logic)
 
     def run_sim(instance, values):
         location = MainScreen.path + instance.get_current_selection()
         if ConfigurationIO.verify_simulation_files(location, MainScreen.t_logic):
                 sim = Simulation(location,MainScreen.t_logic)
-                arrived, departed = sim.run_gui()
+                popup = LoadingPopup()
+                ThreadManager.run_thread_with_popup(sim.run_gui,popup)
 
     def get_current_selection(self):
         return self.list_adapter.selection[0].text + "/"

@@ -32,10 +32,16 @@ class ConfigurationIO:
                     k += 1
         et.write(simulation.LogicLocation)
 
+
+
     @staticmethod
     def load_simulation_data(sim):
+        return ConfigurationIO.get_sim_data(sim.LogicLocation)
+
+    @staticmethod
+    def get_sim_data(path):
         lights = []
-        et = xml.etree.ElementTree.parse(sim.LogicLocation)
+        et = xml.etree.ElementTree.parse(path)
         root = et.getroot()
         for child in root.getchildren():
             if child.tag == "tlLogic":
@@ -80,3 +86,9 @@ class ConfigurationIO:
     def set_simulation_name(path,old_name,new_name):
         if os.path.exists(path+old_name):
             os.rename(os.path.join(path, old_name), os.path.join(path, new_name))
+
+    @staticmethod
+    def get_computer_name():
+        return os.environ['COMPUTERNAME']
+
+

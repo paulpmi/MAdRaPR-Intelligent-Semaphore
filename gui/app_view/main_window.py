@@ -1,5 +1,3 @@
-from threading import Thread
-
 from kivy.adapters.listadapter import ListAdapter
 from kivy.uix.boxlayout import BoxLayout
 
@@ -15,7 +13,7 @@ from gui.app_view.pso_alg_view import PSOView
 from gui.app_view.radom_alg_view import RandomView
 from kivy.uix.listview import ListItemButton, ListView
 
-from gui.thread_manager import ThreadManager
+from utilis.thread_manager import ThreadManager
 from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
 

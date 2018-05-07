@@ -31,4 +31,5 @@ class PSOController(BaseController):
         for p in self.population.particles:
             if p.fitness > pBest.fitness:
                 pBest = p
+        self.simulation.close_simulation()
         return pBest.fitness, pBest.position

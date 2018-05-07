@@ -6,6 +6,8 @@ from kivy.uix.textinput import TextInput
 from random_search.random_search_controller import RandomSearchController
 from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
+from utilis.firebase_handler import RandomSearchRun
+from utilis.repository import DataManager
 
 
 class RandomView(BoxLayout):
@@ -40,5 +42,9 @@ class RandomView(BoxLayout):
         ctrl = RandomSearchController(lights, simulation, no_generations, population_size)
 
         fitness, solution = ctrl.run_alg()
-        ConfigurationIO.modify_sumo_configuration(simulation, solution)
-        simulation.run_gui()
+        sim_name = path.split('/')[-2]
+        run = RandomSearchRun(no_generations,population_size,fitness,solution,sim_name,ConfigurationIO.get_computer_name())
+        DataManager.add_random_run(run)
+
+        # ConfigurationIO.modify_sumo_configuration(simulation, solution)
+        # simulation.run_gui()

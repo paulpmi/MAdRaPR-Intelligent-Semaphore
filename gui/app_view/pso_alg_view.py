@@ -7,6 +7,8 @@ from pso.psocontroller import PSOController
 from random_search.random_search_controller import RandomSearchController
 from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
+from utilis.firebase_handler import PSOSearchRun
+from utilis.repository import DataManager
 
 
 class PSOView(BoxLayout):
@@ -52,5 +54,8 @@ class PSOView(BoxLayout):
         ctrl = PSOController(lights, simulation, no_generations, population_size, inertia, cognitive, social)
 
         fitness, solution = ctrl.run_alg()
-        ConfigurationIO.modify_sumo_configuration(simulation, solution)
-        simulation.run_gui()
+        sim_name = path.split('/')[-2]
+        run = PSOSearchRun(no_generations,population_size,fitness,solution,inertia,cognitive,social,sim_name,ConfigurationIO.get_computer_name())
+        DataManager.add_pso_run(run)
+        # ConfigurationIO.modify_sumo_configuration(simulation, solution)
+        # simulation.run_gui()

@@ -25,6 +25,7 @@ class HiveController(BaseController):
         self.hive.evaluate_population(self.simulation)
         for i in range(0, self.no_generations):
             self.iteration()
+        self.simulation.close_simulation()
         return self.best.fitness,self.best.solution
 
     def iteration(self):

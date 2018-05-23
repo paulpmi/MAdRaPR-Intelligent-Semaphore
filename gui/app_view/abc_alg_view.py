@@ -18,10 +18,13 @@ class ABCView(BoxLayout):
         super(ABCView, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
+        self.times_input = TextInput(text='1', multiline=False)
         self.iteration_input = TextInput(text='30', multiline=False)
         self.population_input = TextInput(text='100', multiline=False)
         self.limit_input = TextInput(text='10', multiline=False)
 
+        self.add_widget(Label(text="Times:", height=10))
+        self.add_widget(self.times_input)
         self.add_widget(Label(text="Generations:", height=10))
         self.add_widget(self.iteration_input)
         self.add_widget(Label(text="Population:"))
@@ -33,21 +36,24 @@ class ABCView(BoxLayout):
         no_generations = 0
         population_size = 0
         limit = 0
+        times = 0
         try:
             no_generations = int(self.iteration_input.text)
+            times = int(self.times_input.text)
             population_size = int(self.population_input.text)
             limit = float(self.limit_input.text)
 
         except ValueError:
             pass
-        simulation = Simulation(path, logic)
-        lights = ConfigurationIO.load_simulation_data(simulation)
-        ctrl = HiveController(lights, simulation, no_generations, population_size, limit)
+        for i in range(0,times):
+            simulation = Simulation(path, logic)
+            lights = ConfigurationIO.load_simulation_data(simulation)
+            ctrl = HiveController(lights, simulation, no_generations, population_size, limit)
 
-        fitness, solution = ctrl.run_alg()
-        sim_name = path.split('/')[-2]
-        run = ABCSearchRun(no_generations, population_size, limit, fitness, solution, sim_name,
-                           ConfigurationIO.get_computer_name())
-        DataManager.add_abc_run(run)
+            fitness, solution = ctrl.run_alg()
+            sim_name = path.split('/')[-2]
+            run = ABCSearchRun(no_generations, population_size, limit, fitness, solution, sim_name,
+                               ConfigurationIO.get_computer_name())
+            DataManager.add_abc_run(run)
         # ConfigurationIO.modify_sumo_configuration(simulation, solution)
         # simulation.run_gui()

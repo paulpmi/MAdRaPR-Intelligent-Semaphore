@@ -46,7 +46,7 @@ class Firebasehandler:
             return result
 
         for item in dic.values():
-            if item[u'simulation_name'] == name and item[u'computer_name'] == computer_name:
+            if str(item[u'simulation_name']) == name and str(item[u'computer_name']) == computer_name:
                 result.append(item)
         return result
 
@@ -155,7 +155,7 @@ class PSOSearchRun(SearchRun):
         best_solution = dic[u'best_solution']
         simulation_name = dic[u'simulation_name']
         computer_name = dic[u'computer_name']
-        return PSOSearchRun(generations, population, inertia, cognitive, social, best_fitness, best_solution,
+        return PSOSearchRun(generations, population, best_fitness, cognitive, social,inertia , best_solution,
                             simulation_name, computer_name)
 
 

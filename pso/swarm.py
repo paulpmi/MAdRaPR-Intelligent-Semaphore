@@ -20,9 +20,12 @@ class Swarm:
                 pBest = p
         return pBest
 
-    def fly_away(self, size):
+    def fly_away(self, size, intersections, simulation):
         size = min(size, self.no_particles)
         sorted(self.particles, key=lambda x: x.fitness, reverse=True)
+        for particle in self.particles[0:size]:
+            particle.initialize(intersections)
+            particle.evaluate(simulation)
 
     def update_best(self):
         for particle in self.particles:

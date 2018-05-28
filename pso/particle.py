@@ -22,6 +22,8 @@ class Particle:
         self.initialize(intersections)
 
     def initialize(self, intersections):
+        self.position = []
+        self.velocity = []
         for light in intersections:
             for i in range(0, len(light.phases)):
                 self.position.append(random.randint(5, 50))
@@ -45,14 +47,14 @@ class Particle:
             self.best_fitness = self.fitness
             self.best_position = copy.copy(self.position)
 
-    def update(self, w, c1, c2, best_particle):
+    def update(self, w, c1, c2, best_position):
         # best global particle
         # update velocity
         # update position
         for i in range(len(self.position)):
             self.velocity[i] = w * self.velocity[i] + int(c1 * random.random() *
                                                           (self.best_position[i] - self.position[i])) + int(
-                c2 * random.random() * (best_particle.position[i] - self.position[i]))
+                c2 * random.random() * (best_position[i] - self.position[i]))
             if self.velocity[i] > 45:
                 self.velocity[i] = 45
 

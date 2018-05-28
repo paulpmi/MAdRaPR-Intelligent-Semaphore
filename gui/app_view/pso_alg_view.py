@@ -20,7 +20,7 @@ class PSOView(BoxLayout):
         self.times_input = TextInput(text='1', multiline=False)
         self.iteration_input = TextInput(text='30', multiline=False)
         self.population_input = TextInput(text='100', multiline=False)
-        self.inertia_input = TextInput(text='0,7', multiline=False)
+        self.inertia_input = TextInput(text='0.7', multiline=False)
         self.cognitive_input = TextInput(text='2', multiline=False)
         self.social_input = TextInput(text='1', multiline=False)
 
@@ -36,7 +36,6 @@ class PSOView(BoxLayout):
         self.add_widget(self.cognitive_input)
         self.add_widget(Label(text="social:"))
         self.add_widget(self.social_input)
-
 
     def run_alg(self, path, logic):
         no_generations = 0
@@ -59,9 +58,10 @@ class PSOView(BoxLayout):
             lights = ConfigurationIO.load_simulation_data(simulation)
             ctrl = PSOController(lights, simulation, no_generations, population_size, inertia, cognitive, social)
 
-            fitness, solution = ctrl.run_alg()
+            fitness, solution, arrived, waiting, step = ctrl.run_alg()
             sim_name = path.split('/')[-2]
-            run = PSOSearchRun(no_generations,population_size,fitness,solution,inertia,cognitive,social,sim_name,ConfigurationIO.get_computer_name())
+            run = PSOSearchRun(no_generations, population_size, fitness, solution, inertia, cognitive, social, sim_name,
+                               ConfigurationIO.get_computer_name(), arrived, waiting, step)
             DataManager.add_pso_run(run)
         # ConfigurationIO.modify_sumo_configuration(simulation, solution)
         # simulation.run_gui()

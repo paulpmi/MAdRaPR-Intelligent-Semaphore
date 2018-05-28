@@ -2,6 +2,8 @@ import random
 
 import copy
 
+import sys
+
 from sumo_io.configuration_io import ConfigurationIO
 
 
@@ -10,7 +12,7 @@ class Bee:
         self.min = min
         self.max = max
         self.solution = [random.randint(min, max) for i in range(0, size)]
-        self.fitness = -1
+        self.fitness = sys.maxint
         self.info = {}
         self.probability = -1
         self.trials = 0
@@ -54,7 +56,7 @@ class Bee:
         return self.solution[index]
 
     def calculate_probability(self, max_fitness):
-        self.probability = 0.9 * self.fitness / max_fitness + 0.1
+        self.probability = 0.9 * (1 - self.fitness / max_fitness) + 0.1
 
     def evaluate(self, simulation):
         ConfigurationIO.modify_sumo_configuration(simulation, self.solution)

@@ -1,3 +1,5 @@
+import sys
+
 from random_search.random_search_generator import RandomSearch
 from random_search.random_search_population import RandomSearchPopulation
 
@@ -12,7 +14,7 @@ class RandomSearchController(BaseController):
         self.population_size = population_siez
         self.population = ""
         self.best_solution = ""
-        self.best_fitness = -1
+        self.best_fitness = sys.maxint
         self.load_data(lights)
 
     def run_alg(self):
@@ -22,7 +24,7 @@ class RandomSearchController(BaseController):
         if self.no_iterations >0:
             ConfigurationIO.modify_sumo_configuration(self.simulation, self.best_solution.solution)
             self.simulation.close_simulation()
-            return self.best_fitness, self.best_solution.solution
+            return self.best_fitness, self.best_solution
         self.simulation.close_simulation()
         return -1,[]
 
@@ -33,6 +35,7 @@ class RandomSearchController(BaseController):
         for solution in self.population.population:
             solution.solution = RandomSearch(5, 50).get_random_solution(solution.solution)
             solution.evaluate(self.simulation)
-            if self.best_fitness < solution.fitness:
+            if self.best_fitness > solution.fitness:
                 self.best_fitness = solution.fitness
                 self.best_solution = solution
+

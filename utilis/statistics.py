@@ -13,7 +13,7 @@ class Statistics:
         diffs = [abs(x - mean) for x in fitnesses]
         return sum(diffs)/len(fitnesses)
 
-runs = Firebasehandler.get_random_runs("DESKTOP-7T3FAU8","RiLSA_example1")
+runs = Firebasehandler.get_abc_runs("DESKTOP-7T3FAU8","RiLSA_example1")
 fitnesses = [x.best_fitness for x in runs]
 mean = Statistics.get_fitness_mean(fitnesses)
 std = Statistics.get_fitness_standart_deviation(fitnesses)

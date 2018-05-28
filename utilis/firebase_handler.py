@@ -97,13 +97,17 @@ class SimulationBlueprint():
 
 
 class SearchRun:
-    def __init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name):
+    def __init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name, arrived,
+                 departed, per_step):
         self.generations = generations
         self.population = population
         self.best_fitness = best_fitness
         self.best_solution = best_solution
         self.simulation_name = simulation_name
         self.computer_name = computer_name
+        self.arrived = arrived
+        self.departed = departed
+        self.per_step = per_step
 
     @abstractmethod
     def to_json(self):
@@ -111,13 +115,16 @@ class SearchRun:
 
 
 class RandomSearchRun(SearchRun):
-    def __init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name):
-        SearchRun.__init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name)
+    def __init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name, arrived,
+                 departed, per_step):
+        SearchRun.__init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name,
+                           arrived, departed, per_step)
 
     def to_json(self):
         return {"generations": self.generations, "population": self.population, "best_fitness": self.best_fitness,
                 "best_solution": self.best_solution, "simulation_name": self.simulation_name,
-                "computer_name": self.computer_name}
+                "computer_name": self.computer_name, "version": 2, "arrived": self.arrived, "waiting": self.departed,
+                "per_step": self.per_step}
 
     @staticmethod
     def from_json(dic):
@@ -132,8 +139,10 @@ class RandomSearchRun(SearchRun):
 
 class PSOSearchRun(SearchRun):
     def __init__(self, generations, population, best_fitness, best_solution, inertia, cognitive, social,
-                 simulation_name, computer_name):
-        SearchRun.__init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name)
+                 simulation_name, computer_name, arrived, departed, per_step):
+        SearchRun.__init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name,
+                           arrived,
+                           departed, per_step)
         self.inertia = inertia
         self.cognitive = cognitive
         self.social = social
@@ -142,7 +151,8 @@ class PSOSearchRun(SearchRun):
         return {"generations": self.generations, "population": self.population, "inertia": self.inertia,
                 "cognitive": self.cognitive, "social": self.social, "best_fitness": self.best_fitness,
                 "best_solution": self.best_solution, "simulation_name": self.simulation_name,
-                "computer_name": self.computer_name}
+                "computer_name": self.computer_name, "version": 2, "arrived": self.arrived,
+                "waiting": self.departed, "per_step": self.per_step}
 
     @staticmethod
     def from_json(dic):
@@ -155,21 +165,23 @@ class PSOSearchRun(SearchRun):
         best_solution = dic[u'best_solution']
         simulation_name = dic[u'simulation_name']
         computer_name = dic[u'computer_name']
-        return PSOSearchRun(generations, population, best_fitness, cognitive, social,inertia , best_solution,
+        return PSOSearchRun(generations, population, best_fitness, cognitive, social, inertia, best_solution,
                             simulation_name, computer_name)
 
 
 class ABCSearchRun(SearchRun):
     def __init__(self, generations, population, limit, best_fitness, best_solution,
-                 simulation_name, computer_name):
-        SearchRun.__init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name)
+                 simulation_name, computer_name, arrived,
+                 departed, per_step):
+        SearchRun.__init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name,
+                           arrived, departed, per_step)
         self.limit = limit
 
     def to_json(self):
         return {"generations": self.generations, "population": self.population, "limit": self.limit,
                 "best_fitness": self.best_fitness,
                 "best_solution": self.best_solution, "simulation_name": self.simulation_name,
-                "computer_name": self.computer_name}
+                "computer_name": self.computer_name, "version": 2}
 
     @staticmethod
     def from_json(dic):

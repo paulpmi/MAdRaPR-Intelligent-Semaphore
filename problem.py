@@ -48,7 +48,7 @@ class Problem:
 
         # See result
         self.sim.run_gui()
-        self.sim.get_arrived_and_departed()
+        self.sim.get_simulation_data()
         self.sim.close_simulation()
 
     def run_gui_only(self):

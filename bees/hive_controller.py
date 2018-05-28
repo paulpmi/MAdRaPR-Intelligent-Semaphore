@@ -34,5 +34,5 @@ class HiveController(BaseController):
         self.hive.send_onlookers_bees(self.simulation)
         self.hive.send_scout_bees(self.simulation)
         best_generation_bee = self.hive.get_best_bee()
-        if best_generation_bee.fitness > self.best.fitness:
+        if best_generation_bee.fitness < self.best.fitness:
             self.best = best_generation_bee.clone()

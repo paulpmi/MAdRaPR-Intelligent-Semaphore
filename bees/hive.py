@@ -41,7 +41,7 @@ class Hive:
     def do_work(self, bee, new_bees, simulation):
         new_bee = self.get_bee_from_neighbour(bee)
         new_bee.evaluate(simulation)
-        if new_bee.fitness > bee.fitness:
+        if new_bee.fitness < bee.fitness:
             new_bees.append(new_bee)
         else:
             bee.trials += 1

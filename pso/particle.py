@@ -1,6 +1,8 @@
 import copy
 import random
 
+import sys
+
 import random_search
 import xml
 from math import exp
@@ -14,9 +16,9 @@ class Particle:
         self.position = []  # list of integers representing the time duration for each state
         self.velocity = []
         self.intersections = intersections
-        self.fitness = 0
+        self.fitness = sys.maxint
         self.best_position = []
-        self.best_fitness = 0
+        self.best_fitness = sys.maxint
         self.initialize(intersections)
 
     def initialize(self, intersections):
@@ -33,12 +35,13 @@ class Particle:
     def evaluate(self, simulation):
         ConfigurationIO.modify_sumo_configuration(simulation, self.position)
         simulation.start_simulation()
-        fitness, departed, arrived = simulation.get_fitness()
-        self.info['departed'] = departed
-        self.info['arrived'] = arrived
+        fitness, departed, waiting, per_step = simulation.get_fitness()
+        self.info['arrived'] = departed
+        self.info['waiting'] = waiting
+        self.info['step'] = per_step
         simulation.close_simulation()
         self.fitness = fitness
-        if self.fitness > self.best_fitness:
+        if self.fitness < self.best_fitness:
             self.best_fitness = self.fitness
             self.best_position = copy.copy(self.position)
 

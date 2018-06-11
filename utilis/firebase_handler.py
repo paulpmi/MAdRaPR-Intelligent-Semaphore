@@ -99,7 +99,7 @@ class SimulationBlueprint():
 class SearchRun:
     def __init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name, arrived,
                  departed, per_step):
-        self.generations = generations
+        self.generations = int(generations)
         self.population = population
         self.best_fitness = best_fitness
         self.best_solution = best_solution
@@ -134,7 +134,11 @@ class RandomSearchRun(SearchRun):
         best_solution = dic[u'best_solution']
         simulation_name = dic[u'simulation_name']
         computer_name = dic[u'computer_name']
-        return RandomSearchRun(generations, population, best_fitness, best_solution, simulation_name, computer_name)
+        arrived = dic[u'arrived']
+        waiting = dic[u'waiting']
+        per_step = dic[u'per_step']
+        return RandomSearchRun(generations, population, best_fitness, best_solution, simulation_name, computer_name,
+                               arrived, waiting, per_step)
 
 
 class PSOSearchRun(SearchRun):
@@ -143,9 +147,9 @@ class PSOSearchRun(SearchRun):
         SearchRun.__init__(self, generations, population, best_fitness, best_solution, simulation_name, computer_name,
                            arrived,
                            departed, per_step)
-        self.inertia = inertia
-        self.cognitive = cognitive
-        self.social = social
+        self.inertia = float(inertia)
+        self.cognitive = float(cognitive)
+        self.social = float(social)
 
     def to_json(self):
         return {"generations": self.generations, "population": self.population, "inertia": self.inertia,
@@ -165,8 +169,11 @@ class PSOSearchRun(SearchRun):
         best_solution = dic[u'best_solution']
         simulation_name = dic[u'simulation_name']
         computer_name = dic[u'computer_name']
-        return PSOSearchRun(generations, population, best_fitness, cognitive, social, inertia, best_solution,
-                            simulation_name, computer_name)
+        arrived = dic[u'arrived']
+        waiting = dic[u'waiting']
+        per_step = dic[u'per_step']
+        return PSOSearchRun(generations, population, best_fitness,best_solution,inertia, cognitive, social,
+                            simulation_name, computer_name, arrived, waiting, per_step)
 
 
 class ABCSearchRun(SearchRun):
@@ -188,10 +195,13 @@ class ABCSearchRun(SearchRun):
     def from_json(dic):
         generations = str(dic[u'generations'])
         population = str(dic[u'population'])
-        limit = str(dic[u'limit'])
+        limit = int(dic[u'limit'])
         best_fitness = dic[u'best_fitness']
         best_solution = dic[u'best_solution']
         simulation_name = dic[u'simulation_name']
         computer_name = dic[u'computer_name']
+        arrived = dic[u'arrived']
+        waiting = dic[u'waiting']
+        per_step = dic[u'per_step']
         return ABCSearchRun(generations, population, limit, best_fitness, best_solution,
-                            simulation_name, computer_name)
+                            simulation_name, computer_name, arrived, waiting, per_step)

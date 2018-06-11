@@ -63,25 +63,27 @@ class Simulation:
         arrived = 0
         waiting = 0
         green_red_ratio_sum = 0
-        vehicles_waiting_times = {}
+        lanes_waiting_times = {}
         vehicles_start_times = {}
         vehicles_end_times = {}
         arrived_per_step = []
+        lane_ids = traci.lane.getIDList()
+        for lane_id in lane_ids:
+            lanes_waiting_times[lane_id] = 0
+
         while step < self.time:
             departed_ids = traci.simulation.getDepartedIDList()
             arrived_ids = traci.simulation.getArrivedIDList()
-            vehicles_ids = traci.vehicle.getIDList()
 
             for vehicle_id in departed_ids:
                 vehicles_start_times[vehicle_id] = copy.deepcopy(step)
                 vehicles_end_times[vehicle_id] = copy.deepcopy(step)
-                vehicles_waiting_times[vehicle_id] = 0
 
             for vehicle_id in arrived_ids:
                 vehicles_end_times[vehicle_id] = copy.deepcopy(step)
 
-            for vehicle_id in vehicles_ids:
-                vehicles_waiting_times[vehicle_id] = traci.vehicle.getAccumulatedWaitingTime(vehicle_id)
+            for lane_id in lane_ids:
+                lanes_waiting_times[lane_id] += traci.lane.getWaitingTime(lane_id)
 
             arrived += len(arrived_ids)
             arrived_per_step.append(arrived)
@@ -90,7 +92,7 @@ class Simulation:
 
         total_journey_time = sum([vehicles_end_times[vehicle_id] - vehicles_start_times[vehicle_id] for vehicle_id in
                                   vehicles_start_times.keys()])
-        total_waiting_time = sum(vehicles_waiting_times.values())
+        total_waiting_time = sum(lanes_waiting_times.values())/1000.0
 
         for vehicle_id in vehicles_start_times:
             if vehicles_end_times[vehicle_id] - vehicles_start_times[vehicle_id] == 0:

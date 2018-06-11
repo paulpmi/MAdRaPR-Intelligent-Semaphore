@@ -23,10 +23,12 @@ class HiveController(BaseController):
 
     def run_alg(self):
         self.hive.evaluate_population(self.simulation)
+        self.best = self.hive.get_best_bee().clone()
         for i in range(0, self.no_generations):
             self.iteration()
         self.simulation.close_simulation()
-        return self.best.fitness,self.best.solution
+        return self.best.fitness, self.best.solution, self.best.info['arrived'], self.best.info['waiting'], \
+               self.best.info['arrived_per_step']
 
     def iteration(self):
         self.hive.send_employed_bees(self.simulation)
@@ -34,5 +36,5 @@ class HiveController(BaseController):
         self.hive.send_onlookers_bees(self.simulation)
         self.hive.send_scout_bees(self.simulation)
         best_generation_bee = self.hive.get_best_bee()
-        if best_generation_bee.fitness < self.best.fitness:
+        if best_generation_bee.fitness > self.best.fitness:
             self.best = best_generation_bee.clone()

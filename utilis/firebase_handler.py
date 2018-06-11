@@ -181,7 +181,8 @@ class ABCSearchRun(SearchRun):
         return {"generations": self.generations, "population": self.population, "limit": self.limit,
                 "best_fitness": self.best_fitness,
                 "best_solution": self.best_solution, "simulation_name": self.simulation_name,
-                "computer_name": self.computer_name, "version": 2}
+                "computer_name": self.computer_name, "version": 2, "arrived": self.arrived,
+                "waiting": self.departed, "per_step": self.per_step}
 
     @staticmethod
     def from_json(dic):

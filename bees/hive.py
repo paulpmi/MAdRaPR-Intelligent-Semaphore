@@ -33,7 +33,7 @@ class Hive:
         return new_bee
 
     def sort(self):
-        self.hive.sort(key=lambda x: x.fitness, reverse=True)
+        self.hive.sort(key=lambda x: x.fitness)
 
     def get_best_bee(self):
         return self.hive[0]

@@ -42,14 +42,15 @@ class RandomView(BoxLayout):
             population_size = int(self.population_input.text)
         except ValueError:
             pass
-        for i in range(0,times):
+        for i in range(0, times):
             simulation = Simulation(path, logic)
             lights = ConfigurationIO.load_simulation_data(simulation)
             ctrl = RandomSearchController(lights, simulation, no_generations, population_size)
 
-            fitness, solution = ctrl.run_alg()
+            fitness, solution, arrived, waiting, step = ctrl.run_alg()
             sim_name = path.split('/')[-2]
-            run = RandomSearchRun(no_generations,population_size,fitness,solution,sim_name,ConfigurationIO.get_computer_name())
+            run = RandomSearchRun(no_generations, population_size, fitness, solution, sim_name,
+                                  ConfigurationIO.get_computer_name(), arrived, waiting, step)
             DataManager.add_random_run(run)
 
         # ConfigurationIO.modify_sumo_configuration(simulation, solution)

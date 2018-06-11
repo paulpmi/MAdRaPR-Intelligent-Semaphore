@@ -1,5 +1,7 @@
 import sys
 
+import copy
+
 from random_search.random_search_generator import RandomSearch
 from random_search.random_search_population import RandomSearchPopulation
 
@@ -15,18 +17,21 @@ class RandomSearchController(BaseController):
         self.population = ""
         self.best_solution = ""
         self.best_fitness = sys.maxint
+        self.arrived = 0
+        self.waiting = 0
+        self.per_step = {}
         self.load_data(lights)
 
     def run_alg(self):
 
         for i in range(0, self.no_iterations):
             self.iteration()
-        if self.no_iterations >0:
-            ConfigurationIO.modify_sumo_configuration(self.simulation, self.best_solution.solution)
+        if self.no_iterations > 0:
+            ConfigurationIO.modify_sumo_configuration(self.simulation, self.best_solution)
             self.simulation.close_simulation()
-            return self.best_fitness, self.best_solution
+            return self.best_fitness, self.best_solution, self.arrived, self.waiting, self.per_step
         self.simulation.close_simulation()
-        return -1,[]
+        return -1, []
 
     def load_data(self, lights):
         self.population = RandomSearchPopulation(self.population_size, lights, 5, 50)
@@ -36,6 +41,8 @@ class RandomSearchController(BaseController):
             solution.solution = RandomSearch(5, 50).get_random_solution(solution.solution)
             solution.evaluate(self.simulation)
             if self.best_fitness > solution.fitness:
-                self.best_fitness = solution.fitness
-                self.best_solution = solution
-
+                self.best_fitness = copy.deepcopy(solution.fitness)
+                self.best_solution = solution.solution[:]
+                self.arrived = copy.deepcopy(solution.info["arrived"])
+                self.waiting = copy.deepcopy(solution.info["waiting"])
+                self.per_step = solution.info["arrived_per_step"][:]

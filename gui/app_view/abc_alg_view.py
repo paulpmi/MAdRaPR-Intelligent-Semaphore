@@ -45,15 +45,15 @@ class ABCView(BoxLayout):
 
         except ValueError:
             pass
-        for i in range(0,times):
+        for i in range(0, times):
             simulation = Simulation(path, logic)
             lights = ConfigurationIO.load_simulation_data(simulation)
             ctrl = HiveController(lights, simulation, no_generations, population_size, limit)
 
-            fitness, solution = ctrl.run_alg()
+            fitness, solution, arrived, waiting, arrived_per_step = ctrl.run_alg()
             sim_name = path.split('/')[-2]
             run = ABCSearchRun(no_generations, population_size, limit, fitness, solution, sim_name,
-                               ConfigurationIO.get_computer_name())
+                               ConfigurationIO.get_computer_name(), arrived, waiting, arrived_per_step)
             DataManager.add_abc_run(run)
         # ConfigurationIO.modify_sumo_configuration(simulation, solution)
         # simulation.run_gui()

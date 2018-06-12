@@ -13,9 +13,7 @@ from gui.app_view.pso_alg_view import PSOView
 from gui.app_view.radom_alg_view import RandomView
 from kivy.uix.listview import ListItemButton, ListView
 
-from utilis.repository import DataManager
 from utilis.thread_manager import ThreadManager
-from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
 
 
@@ -27,9 +25,11 @@ class MainScreen(GridLayout):
 
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
+        self.screen_manager = ""
         self.orientation = 'tb-lr'
         self.pressed_button = ""
         self.loading_popup = LoadingPopup()
+        self.loading_popup.close()
         # handle upper layout
         self.side_bar = BoxLayout(orientation='vertical')
         self.add_widget(self.side_bar)
@@ -114,7 +114,7 @@ class MainScreen(GridLayout):
         if new_simulation and not ConfigurationIO.does_path_exist(MainScreen.path + new_name):
             ConfigurationIO.set_simulation_name(MainScreen.path, new_simulation, new_name)
             self.repopulate_list(new_name)
-            #DataManager.add_simulation_blueprint(MainScreen.path+new_name+"/" + MainScreen.t_logic,new_name)
+            # DataManager.add_simulation_blueprint(MainScreen.path+new_name+"/" + MainScreen.t_logic,new_name)
             popup.dismiss()
 
     def repopulate_list(self, new_name):
@@ -147,15 +147,14 @@ class MainScreen(GridLayout):
                                                          MainScreen.t_logic)
 
     def run_sim(instance, values):
-        location = MainScreen.path + instance.get_current_selection()
-        if ConfigurationIO.verify_simulation_files(location, MainScreen.t_logic):
-            sim = Simulation(location, MainScreen.t_logic)
-            popup = LoadingPopup()
-            ThreadManager.run_thread_with_popup(sim.run_gui, popup)
+        instance.screen_manager.to_results()
+
 
     def get_current_selection(self):
         return self.list_adapter.selection[0].text + "/"
 
+    def get_current_selection_name(self):
+        return self.list_adapter.selection[0].text
 
 class AlgorithmManager(BoxLayout):
     def __init__(self, **kwargs):

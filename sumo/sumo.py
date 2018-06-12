@@ -10,6 +10,8 @@ from cStringIO import StringIO
 
 import traci
 
+from sumo_io.configuration_io import ConfigurationIO
+
 DLR_SUMO_BIN_SUMO_GUI = "C:/Program Files (x86)/DLR/Sumo/bin/sumo-gui"
 
 DLR_SUMO_BIN_SUMO = "C:/Program Files (x86)/DLR/Sumo/bin/sumo"
@@ -52,11 +54,19 @@ class Simulation:
         else:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
-    def run_gui(self):
-        self.start_gui_simulation()
-        fitness, arrived, waiting, per_step = self.get_simulation_data()
-
-        return arrived, arrived, waiting, per_step
+    def run_gui(self, solution, waiting):
+        try:
+            sumo_cmd = [Simulation.sumoBinaryGui, "-c", self.path + "osm.sumocfg"]
+            ConfigurationIO.modify_sumo_configuration(self, solution)
+            traci.start(sumo_cmd)
+            step = 0
+            while step < self.time:
+                traci.simulationStep()
+                step += 1
+            traci.close()
+        except:
+            waiting.dismiss()
+        waiting.dismiss()
 
     def run_simulation(self):
         return self.get_fitness()
@@ -127,21 +137,6 @@ class Simulation:
 
         return arrived, waiting, total_journey_time, total_waiting_time, self.time, green_red_ratio_sum, arrived_per_step
 
-    def run_simul_until_no_more_cars(self):
-        step = 0
-        arrived = 0
-        departed = 0
-        while step < self.time:
-            traci.simulationStep()
-            step += 1
-            arrived += traci.simulation.getArrivedNumber()
-            departed += traci.simulation.getDepartedNumber()
-
-    def start_gui_simulation(self):
-        sumo_cmd = [Simulation.sumoBinaryGui, "-c", self.path + "osm.sumocfg"]
-        traci.start(sumo_cmd)
-        self.stated = True
-
     def get_traffic_lights(self):
         return traci.trafficlight.getIDList()
 
@@ -160,10 +155,6 @@ class Simulation:
             programs.append(t_logic)
             # for p in programs:
             #     print p
-
-    def run_solution(self):
-        arrived, departed = self.get_simulation_data()
-        print arrived, departed
 
     def generate_statistics(self):
         subprocess.call(['python', NET_STATS, '-t', self.trips, '-o', self.statistics])

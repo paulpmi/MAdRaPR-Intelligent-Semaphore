@@ -101,7 +101,7 @@ class SearchRun:
                  departed, per_step):
         self.generations = int(generations)
         self.population = population
-        self.best_fitness = best_fitness
+        self.v = best_fitness
         self.best_solution = best_solution
         self.simulation_name = simulation_name
         self.computer_name = computer_name
@@ -121,7 +121,7 @@ class RandomSearchRun(SearchRun):
                            arrived, departed, per_step)
 
     def to_json(self):
-        return {"generations": self.generations, "population": self.population, "best_fitness": self.best_fitness,
+        return {"generations": self.generations, "population": self.population, "best_fitness": self.v,
                 "best_solution": self.best_solution, "simulation_name": self.simulation_name,
                 "computer_name": self.computer_name, "version": 2, "arrived": self.arrived, "waiting": self.departed,
                 "per_step": self.per_step}
@@ -153,7 +153,7 @@ class PSOSearchRun(SearchRun):
 
     def to_json(self):
         return {"generations": self.generations, "population": self.population, "inertia": self.inertia,
-                "cognitive": self.cognitive, "social": self.social, "best_fitness": self.best_fitness,
+                "cognitive": self.cognitive, "social": self.social, "best_fitness": self.v,
                 "best_solution": self.best_solution, "simulation_name": self.simulation_name,
                 "computer_name": self.computer_name, "version": 2, "arrived": self.arrived,
                 "waiting": self.departed, "per_step": self.per_step}
@@ -186,7 +186,7 @@ class ABCSearchRun(SearchRun):
 
     def to_json(self):
         return {"generations": self.generations, "population": self.population, "limit": self.limit,
-                "best_fitness": self.best_fitness,
+                "best_fitness": self.v,
                 "best_solution": self.best_solution, "simulation_name": self.simulation_name,
                 "computer_name": self.computer_name, "version": 2, "arrived": self.arrived,
                 "waiting": self.departed, "per_step": self.per_step}

@@ -1,5 +1,3 @@
-from Canvas import Rectangle
-
 from kivy.uix.button import Button
 
 from kivy.adapters.listadapter import ListAdapter
@@ -12,6 +10,49 @@ from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
 from utilis.repository import DataManager
 from utilis.thread_manager import ThreadManager
+from external import Graph, MeshLinePlot
+
+
+class RunView(BoxLayout):
+    def __init__(self, **kwargs):
+        super(RunView, self).__init__(**kwargs)
+        self.screen_manager = ""
+
+    def populate(self, data):
+        self.clear_widgets()
+        self.orientation = "vertical"
+        self.type_fitness = HeaderLabel(text="Run type:")
+        self.arrived_waiting_ = HeaderLabel(text="Arrived:")
+        self.population_generations = HeaderLabel(text="Population:")
+        self.params = HeaderLabel()
+
+        self.add_widget(self.type_fitness)
+        self.add_widget(self.arrived_waiting_)
+        self.add_widget(self.population_generations)
+
+        self.type_fitness.text += " " + data.type + " Fitness: " + str(data.fitness)
+        self.arrived_waiting_.text += " " + str(data.arrived) + " Waiting: " + str(data.waiting)
+        self.population_generations.text += " " + str(data.population) + " Generations: " + str(data.generations)
+        if len(data.args.keys()) > 0:
+            self.add_widget(self.params)
+        for key in data.args.keys():
+            self.params.text += key + ": " + str(data.args[key]) + " "
+
+        graph = Graph(xlabel='Time step', ylabel='Arrived cars', x_ticks_minor=10, x_ticks_major=50, y_ticks_minor=10,
+                      y_ticks_major=50,
+                      y_grid_label=True, x_grid_label=True, padding=1, x_grid=True, y_grid=True, xmin=0, xmax=500,
+                      ymin=0, ymax=int(data.arrived + data.waiting),
+                      height=400, hint_size_y=None)
+        plot = MeshLinePlot(color=[1, 1, 0, 1])
+        plot.points = [(x, data.per_step[x]) for x in range(0, len(data.per_step))]
+        graph.add_plot(plot)
+        self.add_widget(graph)
+
+        button = Button(text="Back", on_press=self.go_back, height=50, size_hint_y=None)
+        self.add_widget(button)
+
+    def go_back(instance, values):
+        instance.screen_manager.to_results()
 
 
 class HeaderLabel(Label):
@@ -27,6 +68,8 @@ class DataItem(object):
         self.text = str(fitness) + " " + type
         self.is_selected = is_selected
         self.fitness = fitness
+        self.arrived = arrived
+        self.waiting = waiting
         self.population = population
         self.generations = generations
         self.solution = solution[:]
@@ -107,10 +150,11 @@ class ResultsView(BoxLayout):
                 instance.list_adapter.data) > 0:
             sim = Simulation(location, MainScreen.t_logic)
             ThreadManager.run_thread_without_popup(sim.run_gui, [
-                instance.list_adapter.data[instance.list_adapter.selection[0].index].solution,instance.screen_manager.waiting])
+                instance.list_adapter.data[instance.list_adapter.selection[0].index].solution,
+                instance.screen_manager.waiting])
 
     def view_clicked(instance, values):
-        pass
+        instance.screen_manager.see_details(instance.list_adapter.data[instance.list_adapter.selection[0].index])
 
     def back_clicked(instance, values):
         instance.screen_manager.back_to_main()

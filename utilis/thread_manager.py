@@ -20,7 +20,7 @@ class ThreadManager:
     @staticmethod
     def _run_alg(my_function, popup, location, logic):
         my_function(location, logic)
-        popup.dismiss()
+        popup.close()
 
     @staticmethod
     def _running_function(my_function, popup):
@@ -28,4 +28,4 @@ class ThreadManager:
             my_function()
         except:
             pass
-        popup.dismiss()
+        popup.close()

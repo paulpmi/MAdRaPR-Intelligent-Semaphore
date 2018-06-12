@@ -78,7 +78,7 @@ class MainScreen(GridLayout):
         self.run_algorithm_button = Button(text="Run Algorithm")
         self.run_algorithm_button.bind(on_press=self.run_alg)
 
-        self.run_simulation_button = Button(text="Run Simulation")
+        self.run_simulation_button = Button(text="View solutions")
         self.run_simulation_button.bind(on_press=self.run_sim)
 
         self.actions.add_widget(self.add_simulation_button)
@@ -147,7 +147,7 @@ class MainScreen(GridLayout):
                                                          MainScreen.t_logic)
 
     def run_sim(instance, values):
-        instance.screen_manager.to_results()
+        instance.screen_manager.to_results_repopulate()
 
 
     def get_current_selection(self):

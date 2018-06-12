@@ -1,12 +1,20 @@
 import os
 import sys
 
+import re
+import sumolib
+import subprocess
+
 import copy
+from cStringIO import StringIO
+
 import traci
 
 DLR_SUMO_BIN_SUMO_GUI = "C:/Program Files (x86)/DLR/Sumo/bin/sumo-gui"
 
 DLR_SUMO_BIN_SUMO = "C:/Program Files (x86)/DLR/Sumo/bin/sumo"
+
+NET_STATS = "C:/Program Files (x86)/DLR/Sumo/tools/assign/networkStatistics.py"
 
 
 def toMillis(seconds):
@@ -26,7 +34,18 @@ class Simulation:
         self.path = path
         self.LogicLocation = self.path + logic
         self.time = 500
-        self.sumo_cmd = [Simulation.sumoBinary, "-c", self.path + "osm.sumocfg"]
+
+        self.map = path + "/osm.net.xml"
+        self.route = path + "/osm.passenger.rou.xml"
+        self.trips = path + "/osm.passenger.trips.net.xml"
+
+        self.statistics = path + "/osm.stats.xml"
+
+        self.sumo_cmd = [Simulation.sumoBinary, "-c", self.path + "osm.sumocfg",
+                         "-n", self.map,
+                         "-r", self.route,
+                         "--tripinfo-output", self.trips]
+
         if 'SUMO_HOME' in os.environ:
             tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
             sys.path.append(tools)
@@ -35,41 +54,40 @@ class Simulation:
 
     def run_gui(self):
         self.start_gui_simulation()
-        arrived, departed = self.get_simulation_data()
-        self.close_simulation()
+        fitness, arrived, waiting, per_step = self.get_simulation_data()
 
-        return arrived, departed
+        return arrived, arrived, waiting, per_step
 
     def run_simulation(self):
-        self.start_simulation()
-        f = self.get_fitness()
-
-        self.close_simulation()
-        return f
+        return self.get_fitness()
 
     def get_fitness(self):
-        if not self.stated:
-            return -1, 0, 0
+
         arrived, waiting, total_journey_time, total_waiting_time, self.time, green_red_ratio_sum, arrived_per_step = self.get_simulation_data()
         return (total_journey_time + total_waiting_time + waiting * self.time) / (
-                arrived * arrived + green_red_ratio_sum), arrived, waiting,arrived_per_step
-
-    def close_simulation(self):
-        traci.close()
-        self.stated = False
+                arrived * arrived + green_red_ratio_sum), arrived, waiting, arrived_per_step
 
     def get_simulation_data(self):
+
         step = 0
         arrived = 0
         waiting = 0
+
         green_red_ratio_sum = 0
         lanes_waiting_times = {}
         vehicles_start_times = {}
         vehicles_end_times = {}
         arrived_per_step = []
+
+        traci.start(self.sumo_cmd)
+
         lane_ids = traci.lane.getIDList()
         for lane_id in lane_ids:
             lanes_waiting_times[lane_id] = 0
+
+        for light_id in traci.trafficlight.getIDList():
+            a = traci.trafficlight.getCompleteRedYellowGreenDefinition(light_id)
+            phases = a[-1]._phases
 
         while step < self.time:
             departed_ids = traci.simulation.getDepartedIDList()
@@ -82,25 +100,18 @@ class Simulation:
             for vehicle_id in arrived_ids:
                 vehicles_end_times[vehicle_id] = copy.deepcopy(step)
 
-            for lane_id in lane_ids:
-                lanes_waiting_times[lane_id] += traci.lane.getWaitingTime(lane_id)
-
             arrived += len(arrived_ids)
             arrived_per_step.append(arrived)
             traci.simulationStep()
             step += 1
 
-        total_journey_time = sum([vehicles_end_times[vehicle_id] - vehicles_start_times[vehicle_id] for vehicle_id in
-                                  vehicles_start_times.keys()])
-        total_waiting_time = sum(lanes_waiting_times.values())/1000.0
+        traci.close()
+
+        total_waiting_time, total_journey_time = self.generate_statistics()
 
         for vehicle_id in vehicles_start_times:
             if vehicles_end_times[vehicle_id] - vehicles_start_times[vehicle_id] == 0:
                 waiting += 1
-
-        for light_id in traci.trafficlight.getIDList():
-            a = traci.trafficlight.getCompleteRedYellowGreenDefinition(light_id)
-            phases = a[-1]._phases
 
             for phase in phases:
                 reds = 0
@@ -125,10 +136,6 @@ class Simulation:
             step += 1
             arrived += traci.simulation.getArrivedNumber()
             departed += traci.simulation.getDepartedNumber()
-
-    def start_simulation(self):
-        traci.start(self.sumo_cmd)
-        self.stated = True
 
     def start_gui_simulation(self):
         sumo_cmd = [Simulation.sumoBinaryGui, "-c", self.path + "osm.sumocfg"]
@@ -155,7 +162,27 @@ class Simulation:
             #     print p
 
     def run_solution(self):
-        self.start_simulation()
         arrived, departed = self.get_simulation_data()
         print arrived, departed
-        self.close_simulation()
+
+    def generate_statistics(self):
+        subprocess.call(['python', NET_STATS, '-t', self.trips, '-o', self.statistics])
+
+        file = open(self.statistics, "r")
+        waiting_time = 0
+        travel_time = 0
+        for line in file:
+            try:
+                line.index("total waiting time")
+                values = re.findall(r"[-+]?\d*\.\d+|\d+", line)
+                waiting_time = float(values[0])
+            except ValueError:
+                pass
+            try:
+                line.index("total travel time")
+                values = re.findall(r"[-+]?\d*\.\d+|\d+", line)
+                travel_time = float(values[0])
+            except ValueError:
+                pass
+
+        return waiting_time, travel_time

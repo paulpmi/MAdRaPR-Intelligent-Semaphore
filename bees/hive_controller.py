@@ -26,7 +26,6 @@ class HiveController(BaseController):
         self.best = self.hive.get_best_bee().clone()
         for i in range(0, self.no_generations):
             self.iteration()
-        self.simulation.close_simulation()
         return self.best.fitness, self.best.solution, self.best.info['arrived'], self.best.info['waiting'], \
                self.best.info['arrived_per_step']
 

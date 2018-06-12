@@ -60,10 +60,8 @@ class Bee:
 
     def evaluate(self, simulation):
         ConfigurationIO.modify_sumo_configuration(simulation, self.solution)
-        simulation.start_simulation()
         fitness, arrived, waiting, arrived_per_step = simulation.get_fitness()
         self.info['arrived'] = arrived
         self.info['waiting'] = waiting
         self.info['arrived_per_step'] = arrived_per_step
-        simulation.close_simulation()
         self.fitness = fitness

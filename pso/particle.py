@@ -36,12 +36,10 @@ class Particle:
     #  who haven't
     def evaluate(self, simulation):
         ConfigurationIO.modify_sumo_configuration(simulation, self.position)
-        simulation.start_simulation()
         fitness, departed, waiting, per_step = simulation.get_fitness()
         self.info['arrived'] = departed
         self.info['waiting'] = waiting
         self.info['step'] = per_step
-        simulation.close_simulation()
         self.fitness = fitness
         if self.fitness < self.best_fitness:
             self.best_fitness = self.fitness

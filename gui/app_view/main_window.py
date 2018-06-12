@@ -114,7 +114,7 @@ class MainScreen(GridLayout):
         if new_simulation and not ConfigurationIO.does_path_exist(MainScreen.path + new_name):
             ConfigurationIO.set_simulation_name(MainScreen.path, new_simulation, new_name)
             self.repopulate_list(new_name)
-            DataManager.add_simulation_blueprint(MainScreen.path+new_name+"/" + MainScreen.t_logic,new_name)
+            #DataManager.add_simulation_blueprint(MainScreen.path+new_name+"/" + MainScreen.t_logic,new_name)
             popup.dismiss()
 
     def repopulate_list(self, new_name):

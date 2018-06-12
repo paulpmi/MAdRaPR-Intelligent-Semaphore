@@ -57,7 +57,6 @@ class PSOController(BaseController):
         for i in range(0, self.max_iterations):
             self.iteration(i)
 
-        self.simulation.close_simulation()
         return self.best_fitness, self.best_position, self.info["arrived"], self.info["waiting"], self.info["step"]
 
     def update_best_particle(self):

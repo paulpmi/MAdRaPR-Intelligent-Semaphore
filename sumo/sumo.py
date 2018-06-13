@@ -99,6 +99,18 @@ class Simulation:
             a = traci.trafficlight.getCompleteRedYellowGreenDefinition(light_id)
             phases = a[-1]._phases
 
+            for phase in phases:
+                reds = 0
+                greens = 0
+                duration = phase._duration / 1000.0
+                state = phase._phaseDef
+                reds += state.count('r')
+                reds += state.count('R')
+                greens += state.count('g')
+                greens += state.count('G')
+                reds = max(reds, 1)
+                green_red_ratio_sum += duration * greens / reds
+
         while step < self.time:
             departed_ids = traci.simulation.getDepartedIDList()
             arrived_ids = traci.simulation.getArrivedIDList()
@@ -123,17 +135,7 @@ class Simulation:
             if vehicles_end_times[vehicle_id] - vehicles_start_times[vehicle_id] == 0:
                 waiting += 1
 
-            for phase in phases:
-                reds = 0
-                greens = 0
-                duration = phase._duration / 1000.0
-                state = phase._phaseDef
-                reds += state.count('r')
-                reds += state.count('R')
-                greens += state.count('g')
-                greens += state.count('G')
-                reds = max(reds, 1)
-                green_red_ratio_sum += duration * greens / reds
+
 
         return arrived, waiting, total_journey_time, total_waiting_time, self.time, green_red_ratio_sum, arrived_per_step
 

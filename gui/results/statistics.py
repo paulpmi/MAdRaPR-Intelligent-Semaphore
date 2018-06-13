@@ -40,7 +40,7 @@ class StatisticsView(BoxLayout):
         self.pos_grid.clear_widgets()
         self.abc_grid.clear_widgets()
         self.rand_grid.clear_widgets()
-        
+
         pso_data = Statistics.map_to_mean_and_std_dev(Statistics.separate_pso_runs(pso))
         pso_data = sorted(pso_data.items(), key=lambda x: x[1][0])
         for item in pso_data:

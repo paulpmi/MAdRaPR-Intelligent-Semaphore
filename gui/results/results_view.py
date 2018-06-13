@@ -10,7 +10,7 @@ from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
 from utilis.repository import DataManager
 from utilis.thread_manager import ThreadManager
-from external import Graph, MeshLinePlot
+from external import Graph, MeshLinePlot, BarPlot
 
 
 class RunView(BoxLayout):
@@ -43,7 +43,8 @@ class RunView(BoxLayout):
                       y_grid_label=True, x_grid_label=True, padding=1, x_grid=True, y_grid=True, xmin=0, xmax=500,
                       ymin=0, ymax=int(data.arrived + data.waiting),
                       height=400, hint_size_y=None)
-        plot = MeshLinePlot(color=[1, 1, 0, 1])
+
+        plot = BarPlot(color=[1, 1, 0, 1])
         plot.points = [(x, data.per_step[x]) for x in range(0, len(data.per_step))]
         graph.add_plot(plot)
         self.add_widget(graph)
@@ -76,6 +77,9 @@ class DataItem(object):
         self.args = args.copy()
         self.per_step = per_step[:]
         self.type = type
+        self.pso_runs = []
+        self.abc_runs = []
+        self.rand_runs = []
 
 
 class ResultsView(BoxLayout):
@@ -98,8 +102,10 @@ class ResultsView(BoxLayout):
         self.back_button = Button(on_press=self.back_clicked, text="Back")
         self.run_button = Button(on_press=self.run_clicked, text="Run")
         self.view_button = Button(on_press=self.view_clicked, text="View")
+        self.stats_button = Button(on_press=self.stats_clicked, text="Statistics")
         self.action_bar.add_widget(self.back_button)
         self.action_bar.add_widget(self.run_button)
+        self.action_bar.add_widget(self.stats_button)
         self.action_bar.add_widget(self.view_button)
         data = []
         self.add_widget(HeaderLabel(text='Solutions'))
@@ -117,22 +123,22 @@ class ResultsView(BoxLayout):
 
     def populate(self):
         self.comp_name, self.sim_name = self.screen_manager.get_selected_sim()
-        pso_runs = DataManager.get_pso_runs(self.comp_name, self.sim_name)
-        abc_runs = DataManager.get_abc_runs(self.comp_name, self.sim_name)
-        rand_runs = DataManager.get_rand_runs(self.comp_name, self.sim_name)
+        self.pso_runs = DataManager.get_pso_runs(self.comp_name, self.sim_name)
+        self.abc_runs = DataManager.get_abc_runs(self.comp_name, self.sim_name)
+        self.rand_runs = DataManager.get_rand_runs(self.comp_name, self.sim_name)
 
         data = []
-        for run in pso_runs:
+        for run in self.pso_runs:
             data.append(DataItem(fitness=run.v, population=run.population, generations=run.generations,
                                  solution=run.best_solution, arrived=run.arrived, waiting=run.departed,
                                  per_step=run.per_step, type="PSO",
                                  args={"inertia": run.inertia, "cognitive": run.cognitive, "social": run.social}))
-        for run in abc_runs:
+        for run in self.abc_runs:
             data.append(DataItem(fitness=run.v, population=run.population, generations=run.generations,
                                  solution=run.best_solution, arrived=run.arrived, waiting=run.departed,
                                  per_step=run.per_step, type="ABC",
                                  args={"limit": run.limit}))
-        for run in rand_runs:
+        for run in self.rand_runs:
             data.append(DataItem(fitness=run.v, population=run.population, generations=run.generations,
                                  solution=run.best_solution, arrived=run.arrived, waiting=run.departed,
                                  per_step=run.per_step, type="RAND",
@@ -158,3 +164,6 @@ class ResultsView(BoxLayout):
 
     def back_clicked(instance, values):
         instance.screen_manager.back_to_main()
+
+    def stats_clicked(instance, values):
+        instance.screen_manager.to_stats(instance.pso_runs,instance.abc_runs,instance.rand_runs)

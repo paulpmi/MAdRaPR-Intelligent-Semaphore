@@ -2,8 +2,6 @@ from kivy.app import App
 
 from gui.MyManager import MyScreenManager
 
-
-
 class MyApp(App):
 
     def build(self):

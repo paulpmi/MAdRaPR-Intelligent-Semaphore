@@ -46,35 +46,9 @@ class StatisticsView(BoxLayout):
         for item in pso_data:
             g, w, c, s = item[0]
             mean, std_dev, no = item[1]
-
-            # graph = Graph(ylabel='Fitness mean',
-            #               y_ticks_minor=0.1,
-            #               y_ticks_major=1,
-            #               x_ticks_minor=0.1,
-            #               x_ticks_major=1,
-            #               y_grid_label=True,
-            #               x_grid_label=False,
-            #               padding=1,
-            #               y_grid=True,
-            #               x_grid=True,
-            #               ymin=0,
-            #               ymax=7,
-            #               xmin=0,
-            #               xmax=1,
-            #               # height=100,
-            #               # hint_size_y=None,
-            #               # hint_size_x=None,
-            #               # width=100
-            #               )
-            # plot = BarPlot(color=[1, 1, 0, 1])
-            # plot.points = [(0.5,y) for y in numpy.arange(0.0, mean + 0.1, 0.1).tolist()]
-            # graph.add_plot(plot)
-
             self.pos_grid.add_widget(
                 Label(text="E: " + str(g) + " W: " + str(w) + " C: " + str(c) + " S: " + str(c), size_hint_y=None,
                       height=20))
-
-            # self.pos_grid.add_widget(graph)
 
             self.pos_grid.add_widget(
                 Label(text="Mean: " + str(round(mean, 2)) + " Std dev: " + str(round(std_dev, 2)) + " No: " + str(no),

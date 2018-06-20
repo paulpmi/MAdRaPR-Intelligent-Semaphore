@@ -37,6 +37,11 @@ class PSOView(BoxLayout):
         self.add_widget(Label(text="social:"))
         self.add_widget(self.social_input)
 
+    def is_valid(self, times, no_g, size_p, w, c, s):
+        if times < 0 or no_g < 1 or size_p < 1 or w <= 0 or c <= 0 or s <= 0:
+            return False
+        return True
+
     def run_alg(self, path, logic):
         no_generations = 0
         population_size = 0
@@ -53,6 +58,8 @@ class PSOView(BoxLayout):
             social = float(self.social_input.text)
         except ValueError:
             pass
+        if not self.is_valid(times, no_generations, population_size, inertia, cognitive, social):
+            return
         for i in range(0, times):
             simulation = Simulation(path, logic)
             lights = ConfigurationIO.load_simulation_data(simulation)

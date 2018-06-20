@@ -1,10 +1,13 @@
+import traceback
 from threading import Thread
+
+import sys
 
 
 class ThreadManager:
     @staticmethod
-    def run_thread_without_popup(my_function, args):
-        thread = Thread(target=my_function, args=args)
+    def run_thread_with_button(my_function, args, btn):
+        thread = Thread(target=ThreadManager._button_function, args=[my_function, args, btn])
         thread.start()
 
     @staticmethod
@@ -23,9 +26,23 @@ class ThreadManager:
         popup.close()
 
     @staticmethod
+    def _button_function(my_func, args, btn):
+        try:
+            my_func(args)
+        except:
+            print "Exception in user code:"
+            print '-' * 60
+            traceback.print_exc(file=sys.stdout)
+            print '-' * 60
+        btn.disabled = False
+
+    @staticmethod
     def _running_function(my_function, popup):
         try:
             my_function()
         except:
-            pass
+            print "Exception in user code:"
+            print '-' * 60
+            traceback.print_exc(file=sys.stdout)
+            print '-' * 60
         popup.close()

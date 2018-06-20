@@ -19,7 +19,7 @@ class HiveController(BaseController):
         bee_size = 0
         for light in self.lights:
             bee_size += len(light.phases)
-        self.hive = Hive(bee_size, self.population_size / 2, self.limit, self.min, self.max)
+        self.hive = Hive(bee_size, self.population_size / 2 + 1, self.limit, self.min, self.max)
 
     def run_alg(self):
         self.hive.evaluate_population(self.simulation)

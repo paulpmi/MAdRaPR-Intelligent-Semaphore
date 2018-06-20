@@ -32,6 +32,11 @@ class ABCView(BoxLayout):
         self.add_widget(Label(text="Limit:"))
         self.add_widget(self.limit_input)
 
+    def is_valid(self, times, no_g, size_p, l):
+        if times < 0 or no_g < 1 or size_p < 3 or l < 1 :
+            return False
+        return True
+
     def run_alg(self, path, logic):
         no_generations = 0
         population_size = 0
@@ -45,6 +50,10 @@ class ABCView(BoxLayout):
 
         except ValueError:
             pass
+
+        if not self.is_valid(times, no_generations, population_size, limit):
+            return
+
         for i in range(0, times):
             simulation = Simulation(path, logic)
             lights = ConfigurationIO.load_simulation_data(simulation)
@@ -55,5 +64,3 @@ class ABCView(BoxLayout):
             run = ABCSearchRun(no_generations, population_size, limit, fitness, solution, sim_name,
                                ConfigurationIO.get_computer_name(), arrived, waiting, arrived_per_step)
             DataManager.add_abc_run(run)
-        # ConfigurationIO.modify_sumo_configuration(simulation, solution)
-        # simulation.run_gui()

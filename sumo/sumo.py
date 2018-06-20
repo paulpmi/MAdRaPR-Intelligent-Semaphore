@@ -2,6 +2,8 @@ import os
 import sys
 
 import re
+import traceback
+
 import sumolib
 import subprocess
 
@@ -54,7 +56,7 @@ class Simulation:
         else:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
-    def run_gui(self, solution, waiting):
+    def run_gui(self, solution):
         try:
             sumo_cmd = [Simulation.sumoBinaryGui, "-c", self.path + "osm.sumocfg"]
             ConfigurationIO.modify_sumo_configuration(self, solution)
@@ -65,8 +67,11 @@ class Simulation:
                 step += 1
             traci.close()
         except:
-            waiting.dismiss()
-        waiting.dismiss()
+            print "Exception in user code:"
+            print '-' * 60
+            traceback.print_exc(file=sys.stdout)
+            print '-' * 60
+
 
     def run_simulation(self):
         return self.get_fitness()
@@ -155,8 +160,6 @@ class Simulation:
                 k += 1
             traci.trafficlights.setCompleteRedYellowGreenDefinition(tid, t_logic[0])
             programs.append(t_logic)
-            # for p in programs:
-            #     print p
 
     def generate_statistics(self):
         subprocess.call(['python', NET_STATS, '-t', self.trips, '-o', self.statistics])

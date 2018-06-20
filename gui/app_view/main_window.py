@@ -115,7 +115,7 @@ class MainScreen(GridLayout):
             ConfigurationIO.set_simulation_name(MainScreen.path, new_simulation, new_name)
             self.repopulate_list(new_name)
             # DataManager.add_simulation_blueprint(MainScreen.path+new_name+"/" + MainScreen.t_logic,new_name)
-            popup.dismiss()
+            popup.close()
 
     def repopulate_list(self, new_name):
         self.list_adapter.data.append(new_name)

@@ -1,5 +1,7 @@
 import random
 
+import copy
+
 from bees.bee import Bee
 
 
@@ -17,9 +19,9 @@ class Hive:
             bee.evaluate(simulation)
 
     def get_random_index(self, exception):
-        index = exception
-        while index != exception:
-            index = random.randint(0, len(self.hive))
+        index = copy.deepcopy(exception)
+        while index == exception:
+            index = random.randint(0, len(self.hive)-1)
         return index
 
     def get_bee_from_neighbour(self, bee):
@@ -30,12 +32,14 @@ class Hive:
         neighbour_bee_index = self.get_random_index(current_bee_index)
         new_bee = Bee(self.bee_size, self.min, self.max)
         new_bee.initialize_from_neighbor(self.hive[current_bee_index], self.hive[neighbour_bee_index])
+
         return new_bee
 
     def sort(self):
         self.hive.sort(key=lambda x: x.fitness)
 
     def get_best_bee(self):
+        self.sort()
         return self.hive[0]
 
     def do_work(self, bee, new_bees, simulation):

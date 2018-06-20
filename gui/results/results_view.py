@@ -1,3 +1,6 @@
+import traceback
+
+import sys
 from kivy.uix.button import Button
 
 from kivy.adapters.listadapter import ListAdapter
@@ -92,6 +95,9 @@ class ResultsView(BoxLayout):
         self.action_bar = BoxLayout(orientation="horizontal", height=100, size_hint_y=None)
         self.sim_name = ""
         self.comp_name = ""
+        self.pso_runs = []
+        self.abc_runs = []
+        self.rand_runs = []
         self.init()
 
     def init(self):
@@ -107,6 +113,7 @@ class ResultsView(BoxLayout):
         self.action_bar.add_widget(self.run_button)
         self.action_bar.add_widget(self.stats_button)
         self.action_bar.add_widget(self.view_button)
+
         data = []
         self.add_widget(HeaderLabel(text='Solutions'))
         self.args_converter = lambda row_index, rec: {'text': rec.text,
@@ -123,9 +130,18 @@ class ResultsView(BoxLayout):
 
     def populate(self):
         self.comp_name, self.sim_name = self.screen_manager.get_selected_sim()
-        self.pso_runs = DataManager.get_pso_runs(self.comp_name, self.sim_name)
-        self.abc_runs = DataManager.get_abc_runs(self.comp_name, self.sim_name)
-        self.rand_runs = DataManager.get_rand_runs(self.comp_name, self.sim_name)
+        try:
+            self.pso_runs = DataManager.get_pso_runs(self.comp_name, self.sim_name)
+        except:
+            print "internet connection failure!"
+        try:
+            self.abc_runs = DataManager.get_abc_runs(self.comp_name, self.sim_name)
+        except:
+            print "internet connection failure!"
+        try:
+            self.rand_runs = DataManager.get_rand_runs(self.comp_name, self.sim_name)
+        except:
+            print "internet connection failure!"
 
         data = []
         for run in self.pso_runs:
@@ -155,9 +171,9 @@ class ResultsView(BoxLayout):
         if ConfigurationIO.verify_simulation_files(location, MainScreen.t_logic) and len(
                 instance.list_adapter.data) > 0:
             sim = Simulation(location, MainScreen.t_logic)
-            ThreadManager.run_thread_without_popup(sim.run_gui, [
-                instance.list_adapter.data[instance.list_adapter.selection[0].index].solution,
-                instance.screen_manager.waiting])
+            instance.run_button.disabled = True
+            ThreadManager.run_thread_with_button(sim.run_gui, instance.list_adapter.data[
+                instance.list_adapter.selection[0].index].solution, instance.run_button)
 
     def view_clicked(instance, values):
         instance.screen_manager.see_details(instance.list_adapter.data[instance.list_adapter.selection[0].index])
@@ -166,4 +182,4 @@ class ResultsView(BoxLayout):
         instance.screen_manager.back_to_main()
 
     def stats_clicked(instance, values):
-        instance.screen_manager.to_stats(instance.pso_runs,instance.abc_runs,instance.rand_runs)
+        instance.screen_manager.to_stats(instance.pso_runs, instance.abc_runs, instance.rand_runs)

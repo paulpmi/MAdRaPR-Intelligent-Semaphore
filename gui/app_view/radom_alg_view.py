@@ -32,6 +32,11 @@ class RandomView(BoxLayout):
     def on_enter(instance, value):
         print('User pressed enter in', value)
 
+    def is_valid(self, times, no_g, size_p):
+        if times < 0 or no_g < 1 or size_p < 1:
+            return False
+        return True
+
     def run_alg(self, path, logic):
         no_generations = 0
         population_size = 0
@@ -42,6 +47,8 @@ class RandomView(BoxLayout):
             population_size = int(self.population_input.text)
         except ValueError:
             pass
+        if not self.is_valid(times, no_generations, population_size):
+            return
         for i in range(0, times):
             simulation = Simulation(path, logic)
             lights = ConfigurationIO.load_simulation_data(simulation)

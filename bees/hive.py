@@ -42,6 +42,10 @@ class Hive:
         self.sort()
         return self.hive[0]
 
+    def get_max_fitness(self):
+        self.sort()
+        return self.hive[-1].fitness
+
     def do_work(self, bee, new_bees, simulation):
         new_bee = self.get_bee_from_neighbour(bee)
         new_bee.evaluate(simulation)
@@ -79,7 +83,7 @@ class Hive:
         self.sort()
 
     def calculate_probabilities(self):
-        max_fitness = self.get_best_bee().fitness
+        max_fitness = self.get_max_fitness()
         for bee in self.hive:
             bee.calculate_probability(max_fitness)
 

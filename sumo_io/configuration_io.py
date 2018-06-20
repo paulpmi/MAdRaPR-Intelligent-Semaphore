@@ -85,8 +85,10 @@ class ConfigurationIO:
     @staticmethod
     def set_simulation_name(path,old_name,new_name):
         if os.path.exists(path+old_name):
-            os.rename(os.path.join(path, old_name), os.path.join(path, new_name))
-
+            try:
+                os.rename(os.path.join(path, old_name), os.path.join(path, new_name))
+            except WindowsError:
+                print(WindowsError)
     @staticmethod
     def get_computer_name():
         return os.environ['COMPUTERNAME']

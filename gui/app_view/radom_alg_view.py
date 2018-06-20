@@ -1,3 +1,5 @@
+from xml.etree.ElementTree import ParseError
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -50,15 +52,15 @@ class RandomView(BoxLayout):
         if not self.is_valid(times, no_generations, population_size):
             return
         for i in range(0, times):
-            simulation = Simulation(path, logic)
-            lights = ConfigurationIO.load_simulation_data(simulation)
-            ctrl = RandomSearchController(lights, simulation, no_generations, population_size)
+            try:
+                simulation = Simulation(path, logic)
+                lights = ConfigurationIO.load_simulation_data(simulation)
+                ctrl = RandomSearchController(lights, simulation, no_generations, population_size)
 
-            fitness, solution, arrived, waiting, step = ctrl.run_alg()
-            sim_name = path.split('/')[-2]
-            run = RandomSearchRun(no_generations, population_size, fitness, solution, sim_name,
-                                  ConfigurationIO.get_computer_name(), arrived, waiting, step)
-            DataManager.add_random_run(run)
-
-        # ConfigurationIO.modify_sumo_configuration(simulation, solution)
-        # simulation.run_gui()
+                fitness, solution, arrived, waiting, step = ctrl.run_alg()
+                sim_name = path.split('/')[-2]
+                run = RandomSearchRun(no_generations, population_size, fitness, solution, sim_name,
+                                      ConfigurationIO.get_computer_name(), arrived, waiting, step)
+                DataManager.add_random_run(run)
+            except ParseError:
+                print("corrupted simulation file!")

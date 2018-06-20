@@ -86,6 +86,13 @@ class MainScreen(GridLayout):
         self.actions.add_widget(self.run_simulation_button)
         self.add_widget(self.actions)
 
+    def repopulate(self):
+        data = ConfigurationIO.get_simulations(MainScreen.path)
+        del self.list_adapter.data[:]
+        for d in data:
+            self.list_adapter.data.append(d)
+        self.list_view._trigger_reset_populate()
+
     def add_sim(instance, values):
         ConfigurationIO.add_simulation()
         instance.start_add_simulation_popup()
@@ -96,12 +103,17 @@ class MainScreen(GridLayout):
         name_input = TextInput(multiline=False)
         content.add_widget(name_input)
         button = Button(text="Finish adding!")
+        back_btn = Button(text="Back")
         content.add_widget(button)
+        content.add_widget(back_btn)
 
         popup = Popup(title="Adding Simulation", content=content, auto_dismiss=False)
 
         # bind the on_press event of the button to the dismiss function
         button.bind(on_press=lambda x: (self.handle_adding_simulation(popup, name_input)))
+
+        # bind the on_press event of the button to the back function
+        back_btn.bind(on_press=lambda x: (popup.dismiss()))
 
         # open the popup
         popup.open()
@@ -113,13 +125,9 @@ class MainScreen(GridLayout):
             return
         if new_simulation and not ConfigurationIO.does_path_exist(MainScreen.path + new_name):
             ConfigurationIO.set_simulation_name(MainScreen.path, new_simulation, new_name)
-            self.repopulate_list(new_name)
-            # DataManager.add_simulation_blueprint(MainScreen.path+new_name+"/" + MainScreen.t_logic,new_name)
-            popup.close()
+            self.repopulate()
+            popup.dismiss()
 
-    def repopulate_list(self, new_name):
-        self.list_adapter.data.append(new_name)
-        self.list_view._trigger_reset_populate()
 
     def pso_press_action(instance, values):
         instance.pressed_button.color = MainScreen.unselected_color[:]
@@ -149,12 +157,12 @@ class MainScreen(GridLayout):
     def run_sim(instance, values):
         instance.screen_manager.to_results_repopulate()
 
-
     def get_current_selection(self):
         return self.list_adapter.selection[0].text + "/"
 
     def get_current_selection_name(self):
         return self.list_adapter.selection[0].text
+
 
 class AlgorithmManager(BoxLayout):
     def __init__(self, **kwargs):

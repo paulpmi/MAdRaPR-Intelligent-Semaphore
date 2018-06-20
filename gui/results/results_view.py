@@ -98,6 +98,11 @@ class ResultsView(BoxLayout):
         self.pso_runs = []
         self.abc_runs = []
         self.rand_runs = []
+        self.back_button = Button(on_press=self.back_clicked, text="Back")
+        self.run_button = Button(on_press=self.run_clicked, text="Run")
+        self.view_button = Button(on_press=self.view_clicked, text="View")
+        self.stats_button = Button(on_press=self.stats_clicked, text="Statistics")
+
         self.init()
 
     def init(self):
@@ -105,10 +110,7 @@ class ResultsView(BoxLayout):
         self.clear_widgets()
         self.action_bar.clear_widgets()
 
-        self.back_button = Button(on_press=self.back_clicked, text="Back")
-        self.run_button = Button(on_press=self.run_clicked, text="Run")
-        self.view_button = Button(on_press=self.view_clicked, text="View")
-        self.stats_button = Button(on_press=self.stats_clicked, text="Statistics")
+
         self.action_bar.add_widget(self.back_button)
         self.action_bar.add_widget(self.run_button)
         self.action_bar.add_widget(self.stats_button)
@@ -160,6 +162,13 @@ class ResultsView(BoxLayout):
                                  per_step=run.per_step, type="RAND",
                                  ))
         data = sorted(data, key=lambda key: key.fitness)
+
+        if len(data) < 1:
+            self.run_button.disabled = True
+            self.view_button.disabled = True
+        else:
+            self.run_button.disabled = False
+            self.view_button.disabled = False
 
         del self.list_adapter.data[:]
         for d in data:

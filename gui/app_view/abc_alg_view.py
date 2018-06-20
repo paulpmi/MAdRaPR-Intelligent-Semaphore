@@ -1,3 +1,5 @@
+from xml.etree.ElementTree import ParseError
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -55,12 +57,15 @@ class ABCView(BoxLayout):
             return
 
         for i in range(0, times):
-            simulation = Simulation(path, logic)
-            lights = ConfigurationIO.load_simulation_data(simulation)
-            ctrl = HiveController(lights, simulation, no_generations, population_size, limit)
+            try:
+                simulation = Simulation(path, logic)
+                lights = ConfigurationIO.load_simulation_data(simulation)
+                ctrl = HiveController(lights, simulation, no_generations, population_size, limit)
 
-            fitness, solution, arrived, waiting, arrived_per_step = ctrl.run_alg()
-            sim_name = path.split('/')[-2]
-            run = ABCSearchRun(no_generations, population_size, limit, fitness, solution, sim_name,
-                               ConfigurationIO.get_computer_name(), arrived, waiting, arrived_per_step)
-            DataManager.add_abc_run(run)
+                fitness, solution, arrived, waiting, arrived_per_step = ctrl.run_alg()
+                sim_name = path.split('/')[-2]
+                run = ABCSearchRun(no_generations, population_size, limit, fitness, solution, sim_name,
+                                   ConfigurationIO.get_computer_name(), arrived, waiting, arrived_per_step)
+                DataManager.add_abc_run(run)
+            except ParseError:
+                print("corrupted simulation file!")

@@ -32,6 +32,7 @@ class MyScreenManager(BoxLayout):
 
     def back_to_main(self):
         self.clear_widgets()
+        self.main.repopulate()
         self.add_widget(self.main)
 
     def get_selected_sim(self):

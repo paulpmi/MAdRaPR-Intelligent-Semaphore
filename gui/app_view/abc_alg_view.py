@@ -6,8 +6,6 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 
 from bees.hive_controller import HiveController
-from pso.psocontroller import PSOController
-from random_search.random_search_controller import RandomSearchController
 from sumo.sumo import Simulation
 from sumo_io.configuration_io import ConfigurationIO
 from utilis.firebase_handler import ABCSearchRun

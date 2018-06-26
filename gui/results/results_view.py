@@ -131,6 +131,9 @@ class ResultsView(BoxLayout):
         self.add_widget(self.action_bar)
 
     def populate(self):
+        self.pso_runs = []
+        self.abc_runs = []
+        self.rand_runs = []
         self.comp_name, self.sim_name = self.screen_manager.get_selected_sim()
         try:
             self.pso_runs = DataManager.get_pso_runs(self.comp_name, self.sim_name)

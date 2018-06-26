@@ -1,3 +1,6 @@
+from cmath import sqrt
+
+
 class Statistics:
 
     @staticmethod
@@ -5,10 +8,10 @@ class Statistics:
         return sum(fitnesses) / len(fitnesses)
 
     @staticmethod
-    def get_fitness_standart_deviation(fitnesses):
+    def get_standart_deviation(fitnesses):
         mean = Statistics.get_fitness_mean(fitnesses)
-        diffs = [abs(x - mean) for x in fitnesses]
-        return sum(diffs) / len(fitnesses)
+        diffs = [(x - mean) * (x - mean) for x in fitnesses]
+        return sqrt(sum(diffs) / len(fitnesses))
 
     @staticmethod
     def separate_random_runs(data):
@@ -55,3 +58,9 @@ class Statistics:
             std_dev = Statistics.get_fitness_standart_deviation(data[key])
             new_map[key] = [mean, std_dev, len(data[key])]
         return new_map
+
+    @staticmethod
+    def get_fitness_standart_deviation(fitnesses):
+        mean = Statistics.get_fitness_mean(fitnesses)
+        diffs = [abs(x - mean) for x in fitnesses]
+        return sum(diffs) / len(fitnesses)

@@ -35,5 +35,3 @@ class DataManager:
     @staticmethod
     def get_rand_runs(computer_name, sim_name):
         return Firebasehandler.get_random_runs(computer_name, sim_name)
-
-DataManager.get_abc_runs("DESKTOP-7T3FAU8","RiLSA_example1")

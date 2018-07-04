@@ -56,14 +56,8 @@ class Particle:
             if self.velocity[i] > 45:
                 self.velocity[i] = 45
 
-            try:
-                s = 1 / (1 + exp(self.velocity[i]))
-            except:
-                s = 1 / 1.7976931348623157e+308
-            if random.random() < s:
-
-                self.position[i] = self.position[i] + self.velocity[i]
-                if self.position[i] < 5:
-                    self.position[i] = 5
-                if self.position[i] > 50:
-                    self.position[i] = 50
+            self.position[i] = self.position[i] + self.velocity[i]
+            if self.position[i] < 5:
+                self.position[i] = 5
+            if self.position[i] > 50:
+                self.position[i] = 50

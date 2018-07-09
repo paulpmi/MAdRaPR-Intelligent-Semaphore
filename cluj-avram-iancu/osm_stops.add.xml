@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 12/19/17 00:57:33 by SUMO netconvert Version 0.31.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <type-files value="C:\Program%20Files%20(x86)\DLR\Sumo\data\typemap\osmNetconvert.typ.xml"/>
+        <osm-files value="osm_bbox.osm.xml"/>
+    </input>
+
+    <output>
+        <output-file value="C:\Users\Traian\Sumo\2017-12-19-00-57-32\osm.net.xml"/>
+        <output.street-names value="true"/>
+        <output.original-names value="true"/>
+        <ptstop-output value="osm_stops.add.xml"/>
+    </output>
+
+    <projection>
+        <proj.utm value="true"/>
+    </projection>
+
+    <tls_building>
+        <tls.discard-simple value="true"/>
+        <tls.join value="true"/>
+        <tls.guess-signals value="true"/>
+        <tls.default-type value="actuated"/>
+    </tls_building>
+
+    <ramp_guessing>
+        <ramps.guess value="true"/>
+    </ramp_guessing>
+
+    <processing>
+        <osm.stop-output.length value="25"/>
+        <geometry.remove value="true"/>
+        <roundabouts.guess value="true"/>
+        <junctions.join value="true"/>
+        <junctions.corner-detail value="5"/>
+    </processing>
+
+    <report>
+        <verbose value="true"/>
+    </report>
+
+</configuration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <busStop id="-13641152732" lane="-23582606#3_0" startPos="88.25" endPos="113.25" friendlyPos="true"/>
+    <busStop id="1829420769" name="Piața Avram Iancu Nord" lane="113838783#1_0" startPos="30.82" endPos="55.82" friendlyPos="true"/>
+    <busStop id="2012738610" name="Teatru" lane="7936314#1_0" startPos="38.53" endPos="51.03" friendlyPos="true"/>
+    <busStop id="3292021613" lane="10511797#0_0" startPos="107.25" endPos="132.25" friendlyPos="true"/>
+    <busStop id="3641152732" lane="23582606#3_0" startPos="28.55" endPos="53.55" friendlyPos="true"/>
+</additional>

@@ -1,0 +1,43 @@
+Loading net-file from 'D:\facultate\IA\MAdRaPR-Intelligent-Semaphore\RiLSA_Example\rilsa1.net.xml'... done (1ms).
+Loading additional-files from 'D:\facultate\IA\MAdRaPR-Intelligent-Semaphore\RiLSA_Example\vtypes.add.xml'... 
+Warning: The shape 'transport' for vType 'LKW' is deprecated, use 'truck' instead.
+done (0ms).
+Loading additional-files from 'D:\facultate\IA\MAdRaPR-Intelligent-Semaphore\RiLSA_Example\rilsa1_tls.add.xml'... done (0ms).
+Loading done.
+Simulation started with time: 0.00
+Warning: Teleporting vehicle 'wm2mePKW.279'; waited too long (wrong lane), lane='wm_1', time=6218.00.
+Warning: Vehicle 'wm2mePKW.279' ends teleporting on edge 'me', time 6218.00.
+Warning: Teleporting vehicle 'wm2mePKW.275'; waited too long (wrong lane), lane='wm_1', time=6789.00.
+Warning: Vehicle 'wm2mePKW.275' ends teleporting on edge 'me', time 6789.00.
+Warning: Teleporting vehicle 'wm2mePKW.283'; waited too long (wrong lane), lane='wm_1', time=6790.00.
+Warning: Vehicle 'wm2mePKW.283' ends teleporting on edge 'me', time 6790.00.
+Warning: Teleporting vehicle 'wm2mePKW.285'; waited too long (wrong lane), lane='wm_1', time=6791.00.
+Warning: Vehicle 'wm2mePKW.285' ends teleporting on edge 'me', time 6791.00.
+Warning: Teleporting vehicle 'wm2mePKW.290'; waited too long (wrong lane), lane='wm_1', time=6792.00.
+Warning: Vehicle 'wm2mePKW.290' ends teleporting on edge 'me', time 6792.00.
+Warning: Teleporting vehicle 'wm2mePKW.294'; waited too long (wrong lane), lane='wm_1', time=6793.00.
+Warning: Vehicle 'wm2mePKW.294' ends teleporting on edge 'me', time 6793.00.
+Warning: Teleporting vehicle 'wm2mePKW.303'; waited too long (wrong lane), lane='wm_1', time=7553.00.
+Warning: Vehicle 'wm2mePKW.303' ends teleporting on edge 'me', time 7553.00.
+Warning: Teleporting vehicle 'nm2msPKW.140'; waited too long (wrong lane), lane='nm_1', time=8156.00.
+Warning: Vehicle 'nm2msPKW.140' ends teleporting on edge 'ms', time 8156.00.
+Warning: Teleporting vehicle 'wm2mePKW.366'; waited too long (wrong lane), lane='wm_1', time=8209.00.
+Warning: Vehicle 'wm2mePKW.366' ends teleporting on edge 'me', time 8209.00.
+Warning: Teleporting vehicle 'wm2mePKW.340'; waited too long (wrong lane), lane='wm_1', time=8277.00.
+Warning: Vehicle 'wm2mePKW.340' ends teleporting on edge 'me', time 8277.00.
+Warning: Teleporting vehicle 'wm2mePKW.349'; waited too long (wrong lane), lane='wm_1', time=8278.00.
+Warning: Vehicle 'wm2mePKW.349' ends teleporting on edge 'me', time 8278.00.
+Warning: Teleporting vehicle 'em2mwPKW.402'; waited too long (wrong lane), lane='em_1', time=9762.00.
+Warning: Vehicle 'em2mwPKW.402' ends teleporting on edge 'mw', time 9762.00.
+Warning: Teleporting vehicle 'em2mwPKW.412'; waited too long (wrong lane), lane='em_1', time=9763.00.
+Warning: Vehicle 'em2mwPKW.412' ends teleporting on edge 'mw', time 9763.00.
+Performance: 
+ Duration: 48393ms
+ Real time factor: 210.609
+ UPS: 51941.933751
+Vehicles: 
+ Inserted: 1899 (Loaded: 2170)
+ Running: 171
+ Waiting: 271
+Teleports: 13 (Wrong Lane: 13)
+

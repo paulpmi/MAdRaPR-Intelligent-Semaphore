@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 12/19/17 02:12:41 by SUMO netconvert Version 0.31.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <type-files value="C:\Program%20Files%20(x86)\DLR\Sumo\data\typemap\osmNetconvert.typ.xml"/>
+        <osm-files value="osm_bbox.osm.xml"/>
+    </input>
+
+    <output>
+        <output-file value="C:\Users\Traian\Sumo\2017-12-19-02-12-38\osm.net.xml"/>
+        <output.street-names value="true"/>
+        <output.original-names value="true"/>
+        <ptstop-output value="osm_stops.add.xml"/>
+    </output>
+
+    <projection>
+        <proj.utm value="true"/>
+    </projection>
+
+    <tls_building>
+        <tls.discard-simple value="true"/>
+        <tls.join value="true"/>
+        <tls.guess-signals value="true"/>
+        <tls.default-type value="actuated"/>
+    </tls_building>
+
+    <ramp_guessing>
+        <ramps.guess value="true"/>
+    </ramp_guessing>
+
+    <processing>
+        <osm.stop-output.length value="25"/>
+        <geometry.remove value="true"/>
+        <roundabouts.guess value="true"/>
+        <junctions.join value="true"/>
+        <junctions.corner-detail value="5"/>
+    </processing>
+
+    <report>
+        <verbose value="true"/>
+    </report>
+
+</configuration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <busStop id="-11693839700" lane="-302299800#0_0" startPos="70.89" endPos="83.38" friendlyPos="true"/>
+    <busStop id="-11705983288" lane="-24283528#4_0" startPos="2.54" endPos="27.54" friendlyPos="true"/>
+    <busStop id="-11710529786" lane="-24283528#4_0" startPos="0.00" endPos="23.08" friendlyPos="true"/>
+    <busStop id="-1258984954" lane="-23893643#1_0" startPos="196.36" endPos="214.51" friendlyPos="true"/>
+    <busStop id="-13063499386" name="Andrei Mureșanu" lane="-302113483#0_0" startPos="258.15" endPos="270.65" friendlyPos="true"/>
+    <busStop id="-13257889478" lane="-411914874_0" startPos="51.75" endPos="76.75" friendlyPos="true"/>
+    <busStop id="-13259965698" lane="-44194781#1_0" startPos="53.72" endPos="78.72" friendlyPos="true"/>
+    <busStop id="-13284108602" lane="-407873338_0" startPos="127.30" endPos="152.30" friendlyPos="true"/>
+    <busStop id="-13641152732" lane="-23582606#3_0" startPos="88.25" endPos="113.25" friendlyPos="true"/>
+    <busStop id="-1432816166" lane="-525510189_0" startPos="18.33" endPos="43.33" friendlyPos="true"/>
+    <busStop id="1693839700" lane="302299800#0_0" startPos="0.00" endPos="12.50" friendlyPos="true"/>
+    <busStop id="1705983288" lane="24283528#4_0" startPos="24.67" endPos="49.67" friendlyPos="true"/>
+    <busStop id="1708841044" lane="37190757_0" startPos="166.23" endPos="191.23" friendlyPos="true"/>
+    <busStop id="1710529786" lane="24283528#4_0" startPos="29.14" endPos="52.41" friendlyPos="true"/>
+    <busStop id="1829420769" name="Piața Avram Iancu Nord" lane="113838783#1_0" startPos="30.82" endPos="55.82" friendlyPos="true"/>
+    <busStop id="2012738610" name="Teatru" lane="7936314#1_0" startPos="38.55" endPos="63.55" friendlyPos="true"/>
+    <busStop id="258984954" lane="23893643#1_0" startPos="0.00" endPos="18.22" friendlyPos="true"/>
+    <busStop id="3063499386" name="Andrei Mureșanu" lane="302113483#0_0" startPos="0.00" endPos="11.50" friendlyPos="true"/>
+    <busStop id="3257889478" lane="13347875#2_0" startPos="40.79" endPos="65.79" friendlyPos="true"/>
+    <busStop id="3259965698" lane="44194781#1_0" startPos="97.72" endPos="122.72" friendlyPos="true"/>
+    <busStop id="3284108602" lane="407873338_0" startPos="475.86" endPos="500.86" friendlyPos="true"/>
+    <busStop id="3292021613" lane="10511797#0_0" startPos="107.25" endPos="132.25" friendlyPos="true"/>
+    <busStop id="3641152732" lane="23582606#3_0" startPos="28.55" endPos="53.55" friendlyPos="true"/>
+    <busStop id="3842476676" name="Gheorghe Barițiu" lane="338025192#0_0" startPos="50.42" endPos="75.42" friendlyPos="true"/>
+    <busStop id="3842476677" name="Opera Maghiară Est" lane="7976631#1_0" startPos="0.00" endPos="8.53" friendlyPos="true"/>
+    <busStop id="429919280" lane="7976586_0" startPos="25.46" endPos="50.46" friendlyPos="true"/>
+    <busStop id="429919282" lane="7976495#1_0" startPos="14.65" endPos="39.65" friendlyPos="true"/>
+    <busStop id="432816166" lane="7976483_0" startPos="86.18" endPos="111.18" friendlyPos="true"/>
+    <busStop id="736608144" name="Dacia" lane="7976556#1_0" startPos="55.72" endPos="80.72" friendlyPos="true"/>
+    <busStop id="768092799" name="Piața Cipariu Nord" lane="190629953#1_0" startPos="0.00" endPos="21.52" friendlyPos="true"/>
+</additional>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 12/19/17 00:57:34 by SUMO duarouter Version 0.31.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="osm.net.xml"/>
+        <route-files value="osm.motorcycle.trips.xml"/>
+    </input>
+
+    <output>
+        <output-file value="osm.motorcycle.rou.xml"/>
+    </output>
+
+    <processing>
+        <ignore-errors value="true"/>
+    </processing>
+
+    <time>
+        <begin value="0"/>
+        <end value="1000.0"/>
+    </time>
+
+    <report>
+        <no-warnings value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="motorcycle" speedFactor="normc(1.00,0.10,0.20,2.00)" vClass="motorcycle"/>
+    <vehicle id="moto3" type="motorcycle" depart="93.37" departLane="best">
+        <routeDistribution last="0">
+            <route cost="19.13" probability="1.00000000" edges="546641257 302113464 44356591#0 44356591#1 44356591#2 411909327#0 411909327#1 7936457 10511797#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto4" type="motorcycle" depart="124.50" departLane="best">
+        <routeDistribution last="0">
+            <route cost="36.03" probability="1.00000000" edges="23893810#0 411908606 7936457 10511797#0 43056322#0 43056322#1 -43056321#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto5" type="motorcycle" depart="155.62" departLane="best">
+        <routeDistribution last="0">
+            <route cost="26.33" probability="1.00000000" edges="177922838#1 177922838#2 338683089#1 44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 302113464"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto8" type="motorcycle" depart="249.00" departLane="best">
+        <routeDistribution last="0">
+            <route cost="32.48" probability="1.00000000" edges="177922838#1 177922838#2 338683089#1 44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 363554496 363554495"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto9" type="motorcycle" depart="280.12" departLane="best">
+        <routeDistribution last="0">
+            <route cost="12.05" probability="1.00000000" edges="43056322#1 -43056321#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto10" type="motorcycle" depart="311.24" departLane="best">
+        <routeDistribution last="0">
+            <route cost="16.10" probability="1.00000000" edges="43056322#1 43056321#1"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto12" type="motorcycle" depart="373.49" departLane="best">
+        <routeDistribution last="0">
+            <route cost="13.91" probability="1.00000000" edges="7936457 113838783#0 113838783#1 243065797 302113464 23582606#0 23582606#1 23582606#2"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto13" type="motorcycle" depart="404.62" departLane="best">
+        <routeDistribution last="0">
+            <route cost="30.67" probability="1.00000000" edges="-7976448#1 -7976448#0 44356591#0 44356591#1 44356591#2 411909327#0 411909327#1 7936457 10511797#0 10511797#1"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto14" type="motorcycle" depart="435.74" departLane="best">
+        <routeDistribution last="0">
+            <route cost="16.10" probability="1.00000000" edges="44356591#1 44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 363554496"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto16" type="motorcycle" depart="497.99" departLane="best">
+        <routeDistribution last="0">
+            <route cost="43.86" probability="1.00000000" edges="338683089#0 338683089#1 44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 302113464 7976448#0 7976448#1"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto19" type="motorcycle" depart="591.36" departLane="best">
+        <routeDistribution last="0">
+            <route cost="22.86" probability="1.00000000" edges="44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 363554496 363554495"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto20" type="motorcycle" depart="622.49" departLane="best">
+        <routeDistribution last="0">
+            <route cost="13.51" probability="1.00000000" edges="411909327#1 7936457 113838783#0 113838783#1 243065797 302113464 7976448#0 -7976448#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto21" type="motorcycle" depart="653.61" departLane="best">
+        <routeDistribution last="0">
+            <route cost="26.68" probability="1.00000000" edges="177922838#1 177922838#2 338683089#1 44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 302113464 23582606#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto23" type="motorcycle" depart="715.86" departLane="best">
+        <routeDistribution last="0">
+            <route cost="24.25" probability="1.00000000" edges="-7976448#1 -7976448#0 44356591#0 44356591#1 44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 302113464 23582606#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto27" type="motorcycle" depart="840.36" departLane="best">
+        <routeDistribution last="0">
+            <route cost="12.00" probability="1.00000000" edges="411908606 7936457 113838783#0 113838783#1 243065797 363554496"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto28" type="motorcycle" depart="871.49" departLane="best">
+        <routeDistribution last="0">
+            <route cost="25.49" probability="1.00000000" edges="113838783#1 243065797 302113464 44356591#0 44356591#1 44356591#2 411909327#0 411909327#1 7936457 10511797#0 43056322#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto29" type="motorcycle" depart="902.61" departLane="best">
+        <routeDistribution last="0">
+            <route cost="16.53" probability="1.00000000" edges="113838783#0 113838783#1 243065797 302113464 23582606#0 23582606#1 23582606#2 23582606#3 23582606#4"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto30" type="motorcycle" depart="933.73" departLane="best">
+        <routeDistribution last="0">
+            <route cost="7.44" probability="1.00000000" edges="7976448#0 -7976448#0 44356591#0 44356591#1 44356591#2 411909327#0"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto31" type="motorcycle" depart="964.86" departLane="best">
+        <routeDistribution last="0">
+            <route cost="29.71" probability="1.00000000" edges="338683089#1 44356591#2 411909327#0 411909327#1 7936457 10511797#0 43056322#0 43056322#1 43056321#1"/>
+        </routeDistribution>
+    </vehicle>
+    <vehicle id="moto32" type="motorcycle" depart="995.98" departLane="best">
+        <routeDistribution last="0">
+            <route cost="20.54" probability="1.00000000" edges="44356591#1 44356591#2 411909327#0 411909327#1 7936457 113838783#0 113838783#1 243065797 302113464 44356591#0"/>
+        </routeDistribution>
+    </vehicle>
+</routes>

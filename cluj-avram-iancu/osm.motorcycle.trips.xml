@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!-- generated on 2017-12-19 00:57:34.243017 by $Id: route2trips.py 25256 2017-07-19 06:38:15Z behrisch $ via randomTrips.py
+  options: 
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="motorcycle" speedFactor="normc(1.00,0.10,0.20,2.00)" vClass="motorcycle">
+    </vType>
+    <trip id="moto3" depart="93.37" departLane="best" from="546641257" to="10511797#0" type="motorcycle"/>
+    <trip id="moto4" depart="124.50" departLane="best" from="23893810#0" to="-43056321#0" type="motorcycle"/>
+    <trip id="moto5" depart="155.62" departLane="best" from="177922838#1" to="302113464" type="motorcycle"/>
+    <trip id="moto8" depart="249.00" departLane="best" from="177922838#1" to="363554495" type="motorcycle"/>
+    <trip id="moto9" depart="280.12" departLane="best" from="43056322#1" to="-43056321#0" type="motorcycle"/>
+    <trip id="moto10" depart="311.24" departLane="best" from="43056322#1" to="43056321#1" type="motorcycle"/>
+    <trip id="moto12" depart="373.49" departLane="best" from="7936457" to="23582606#2" type="motorcycle"/>
+    <trip id="moto13" depart="404.62" departLane="best" from="-7976448#1" to="10511797#1" type="motorcycle"/>
+    <trip id="moto14" depart="435.74" departLane="best" from="44356591#1" to="363554496" type="motorcycle"/>
+    <trip id="moto16" depart="497.99" departLane="best" from="338683089#0" to="7976448#1" type="motorcycle"/>
+    <trip id="moto19" depart="591.36" departLane="best" from="44356591#2" to="363554495" type="motorcycle"/>
+    <trip id="moto20" depart="622.49" departLane="best" from="411909327#1" to="-7976448#0" type="motorcycle"/>
+    <trip id="moto21" depart="653.61" departLane="best" from="177922838#1" to="23582606#0" type="motorcycle"/>
+    <trip id="moto23" depart="715.86" departLane="best" from="-7976448#1" to="23582606#0" type="motorcycle"/>
+    <trip id="moto27" depart="840.36" departLane="best" from="411908606" to="363554496" type="motorcycle"/>
+    <trip id="moto28" depart="871.49" departLane="best" from="113838783#1" to="43056322#0" type="motorcycle"/>
+    <trip id="moto29" depart="902.61" departLane="best" from="113838783#0" to="23582606#4" type="motorcycle"/>
+    <trip id="moto30" depart="933.73" departLane="best" from="7976448#0" to="411909327#0" type="motorcycle"/>
+    <trip id="moto31" depart="964.86" departLane="best" from="338683089#1" to="43056321#1" type="motorcycle"/>
+    <trip id="moto32" depart="995.98" departLane="best" from="44356591#1" to="44356591#0" type="motorcycle"/>
+</routes>
